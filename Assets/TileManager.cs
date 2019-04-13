@@ -21,6 +21,6 @@ public class TileManager : MonoBehaviour
 
     void SetTarget()
     {
-        pillars.items[1].GetComponentInChildren<Target>().enabled = true;
+        GameObject.Find("Pillar (1)").GetComponentInChildren<Target>().enabled = true;
     }
 }

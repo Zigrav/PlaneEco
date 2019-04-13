@@ -7,6 +7,7 @@ public class AimManager : MonoBehaviour
 {
     public PathCreator aim_spawn_area;
     public float aim_walk_path_max_deviation;
+    public float aim_walk_path_prolong_dist;
     public VertexPath vertex_aim_path;
     public float aim_move_speed = 0.0f;
 
@@ -143,6 +144,17 @@ public class AimManager : MonoBehaviour
         Vector3[] points = { aim_start_pos, middle_point, target_pos };
 
         BezierPath bezier_aim_path  = new BezierPath(points);
+        vertex_aim_path = new VertexPath(bezier_aim_path);
+
+        // Get path's forward vector
+        Vector3 path_end_forward_vect = vertex_aim_path.GetDirection(0.99f);
+        Vector3 path_end_point = vertex_aim_path.GetPoint(0.99f);
+        path_end_point += path_end_forward_vect * aim_walk_path_prolong_dist;
+
+        // Modify bezier path
+        bezier_aim_path.AddSegmentToEnd(path_end_point);
+
+        // Create new modified vertex path
         vertex_aim_path = new VertexPath(bezier_aim_path);
 
         SetAimAtFraction(0.0f);
