@@ -17,6 +17,7 @@ public class JumpByParabola : MonoBehaviour
     private new Collider collider;
 
     public UnityEvent pl_missed;
+    public UnityEvent new_target;
 
     private bool put_on_start = false;
 
@@ -58,6 +59,7 @@ public class JumpByParabola : MonoBehaviour
 
     public void SchedulePutOnStart()
     {
+        // Debug.Log("Schedule");
         put_on_start = true;
     }
 
@@ -69,16 +71,19 @@ public class JumpByParabola : MonoBehaviour
             transform.position = new Vector3(0.0f, 5.3f, 0.0f);
             // Debug.Log("pos: " + transform.position);
             put_on_start = false;
+
+            new_target.Invoke();
         }
     }
 
     void MoveByPath()
     {
         if (!is_pl_jumping) return;
-
         // Debug.Log("In MoveByPath");
 
-        path_fraction += char_jump_speed;
+        char_fly_vertex_path = aim_manager.char_fly_vertex_path;
+        
+        path_fraction += (char_jump_speed / char_fly_vertex_path.length);
 
         if(path_fraction >= 1.0f)
         {
@@ -107,7 +112,6 @@ public class JumpByParabola : MonoBehaviour
     void SetCharAtFraction(float path_fraction)
     {
         // Debug.Log("SetCharAtFraction: " + path_fraction);
-        char_fly_vertex_path = aim_manager.char_fly_vertex_path;
 
         Vector3 curr_aim_post = char_fly_vertex_path.GetPoint(path_fraction);
 

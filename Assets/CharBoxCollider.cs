@@ -16,17 +16,16 @@ public class CharBoxCollider : MonoBehaviour
 
         if (other_obj == curr_target.v.gameObject)
         {
+            Debug.Log("from box 111 collision: hit");
             // Pl hit the target
             pl_hit.Invoke();
-
-            Debug.Log("from box 111 collision: hit");
         }
         else
         {
+            Debug.Log("from box 111 collision: missed");
+
             // Player missed
             pl_missed.Invoke();
-
-            Debug.Log("from box 111 collision: missed");
         }
     }
 }
