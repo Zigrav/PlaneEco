@@ -6,17 +6,18 @@ using UnityEngine.Events;
 
 public class JumpByParabola : MonoBehaviour
 {
-    public PathCreator char_jump_path;
     public float char_jump_speed;
     private float path_fraction;
 
     private bool is_pl_jumping = false;
+    private bool will_hit = false;
 
     public TargetVariable curr_target;
     private Rigidbody rigid_body;
     private new Collider collider;
 
     public UnityEvent pl_missed;
+    public UnityEvent pl_hit;
     public UnityEvent new_target;
 
     private bool put_on_start = false;
@@ -42,6 +43,12 @@ public class JumpByParabola : MonoBehaviour
     private void Update()
     {
         // Debug.Log("Update");
+    }
+
+    public void SetWillHitToTrue()
+    {
+        // Debug.Log("will_hit = true");
+        will_hit = true;
     }
 
     public void StartJumping()
@@ -87,9 +94,23 @@ public class JumpByParabola : MonoBehaviour
 
         if(path_fraction >= 1.0f)
         {
-            // Debug.Log("> 1: " + path_fraction);
-            // Player missed
-            pl_missed.Invoke();
+            Debug.Log("> 1: " + path_fraction);
+
+            if (will_hit)
+            {
+                // Player hit
+                Debug.Log("Pl hit");
+
+                will_hit = false;
+
+                pl_hit.Invoke();
+            }
+            else
+            {
+                // Player missed
+                Debug.Log("Pl missed");
+                pl_missed.Invoke();
+            }
 
             return;
         }
@@ -102,9 +123,7 @@ public class JumpByParabola : MonoBehaviour
         StopJumping();
 
         Collider sphere_collider = GetComponentInChildren<SphereCollider>();
-        Collider box_collider = GetComponentInChildren<BoxCollider>();
 
-        box_collider.enabled = false;
         sphere_collider.isTrigger = false;
         rigid_body.isKinematic = false;
     }

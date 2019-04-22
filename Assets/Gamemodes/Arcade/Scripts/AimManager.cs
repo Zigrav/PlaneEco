@@ -140,7 +140,8 @@ public class AimManager : MonoBehaviour
         Vector3 char_pos = char_transform.position;
 
         // Get Aim Random Start Position
-        Vector3 aim_start_pos = RandPointInPolygon.Get(aim_spawn_area_min_x, aim_spawn_area_max_x, aim_spawn_area.path.vertices);
+        Vector3 aim_start_pos = CustomRandomPointOnArea();
+
         // Vector3 aim_start_pos = GameObject.Find("MiddleFocus").transform.position;
         aim_start_pos.y = char_pos.y;
 
@@ -200,6 +201,38 @@ public class AimManager : MonoBehaviour
 
         SetAimAtFraction(0.0f);
     }
+
+    private Vector3 CustomRandomPointOnArea()
+    {
+        // Get Aim Random Start Position
+        Vector3 point = RandPointInPolygon.Get(aim_spawn_area_min_x, aim_spawn_area_max_x, aim_spawn_area.path.vertices);
+
+        // Randomly Reflect
+        bool should_use_reflected = (Random.value > 0.5f);
+
+        if (should_use_reflected)
+        {
+            point = ReflectAroundCurrPlane(point);
+        }
+
+        return point;
+    }
+
+    private Vector3 ReflectAroundCurrPlane(Vector3 point)
+    {
+        // Set up new reflection plane
+        Vector3 curr_target_pos = GameObject.Find("Pillar (1)").GetComponentInChildren<Transform>().position;
+        Vector3 curr_platform_pos = GameObject.Find("Pillar").GetComponentInChildren<Transform>().position;
+
+        Vector3 from_curr_platform_to_curr_target_norm = Vector3.Normalize(curr_target_pos - curr_platform_pos);
+        Vector3 reflection_plane_norm = Vector3.Normalize(Vector3.Cross(from_curr_platform_to_curr_target_norm, Vector3.up));
+        
+        Vector3 from_curr_platform_pos_to_probe_pos = point - curr_platform_pos;
+        float projected_dist = Vector3.Dot(from_curr_platform_pos_to_probe_pos, reflection_plane_norm);
+        point += 2 * projected_dist * (-reflection_plane_norm);
+
+        return point;
+    }
     
     [ContextMenu("test aim spawner")]
     public void TestAimSpawner()
@@ -207,9 +240,10 @@ public class AimManager : MonoBehaviour
         aim_spawn_area_max_x = aim_spawn_area.path.bounds.center.x + aim_spawn_area.path.bounds.extents.x;
         aim_spawn_area_min_x = aim_spawn_area.path.bounds.center.x - aim_spawn_area.path.bounds.extents.x;
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 300; i++)
         {
-            Vector3 pos = RandPointInPolygon.Get(aim_spawn_area_min_x, aim_spawn_area_max_x, aim_spawn_area.path.vertices);
+            Vector3 pos = CustomRandomPointOnArea();
+
             GameObject new_orb = Instantiate(test_thing, pos, Quaternion.identity) as GameObject;
         }
     }

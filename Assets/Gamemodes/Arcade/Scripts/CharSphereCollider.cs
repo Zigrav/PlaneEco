@@ -5,13 +5,13 @@ using UnityEngine.Events;
 
 public class CharSphereCollider : MonoBehaviour
 {
-    public UnityEvent pl_missed;
+    // public UnityEvent pl_missed;
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("from 222 sphere collider: missed");
+        // Debug.Log("Sphere Collied");
 
         // Player missed
-        pl_missed.Invoke();
+        // pl_missed.Invoke();
     }
 }

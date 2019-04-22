@@ -17,6 +17,11 @@ public class MatchManager : MonoBehaviour
         
     }
 
+    public void TestLog()
+    {
+        Debug.Log("TestLog");
+    }
+
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

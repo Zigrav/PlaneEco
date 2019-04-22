@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3843778186740390603}
   - component: {fileID: 7323539655091227364}
   - component: {fileID: 6081038132770027094}
-  - component: {fileID: 3843778186740390604}
+  - component: {fileID: 6612762470539295547}
   - component: {fileID: 3843778186740390605}
   m_Layer: 0
   m_Name: Character
@@ -36,7 +36,6 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 6764060120190066969}
-  - {fileID: 6355992294598792519}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,7 +157,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 3843778186740390605}
-        m_MethodName: PutOnStart
+        m_MethodName: SchedulePutOnStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -199,7 +198,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &3843778186740390604
+--- !u!114 &6612762470539295547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,23 +207,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3843778186740390602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbb692b0b42067e4fbdb5b16b37c9818, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetIsHit:
+  Event: {fileID: 0}
+  Response:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 57f8b090a4ac9fc47bbdfd9de41060c7, type: 2}
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &3843778186740390605
@@ -240,81 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   char_jump_path: {fileID: 0}
-  char_jump_speed: 0.005
+  char_jump_speed: 0.1
   curr_target: {fileID: 11400000, guid: 59835c0a9d3a7bb44b7ef2a5ac3060bb, type: 2}
-  pl_missed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 02ff49528ddd0a246af2152d32a0ef84, type: 2}
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!1 &6076442289452222110
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6355992294598792519}
-  - component: {fileID: 861180809207957846}
-  - component: {fileID: 5861475961241325332}
-  m_Layer: 0
-  m_Name: BoxColliderGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6355992294598792519
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6076442289452222110}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2303303886225149496}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &861180809207957846
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6076442289452222110}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.3, z: 0.1}
-  m_Center: {x: 0, y: -0.6, z: 0}
---- !u!114 &5861475961241325332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6076442289452222110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b48533fc5f434d4b97dd062c2348ca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   pl_missed:
     m_PersistentCalls:
       m_Calls:
@@ -333,8 +249,13 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   pl_hit:
     m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  new_target:
+    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: fd81039bd468aa34ab94fdba1d1ea96c, type: 2}
+      - m_Target: {fileID: 11400000, guid: 15bdf5a602ed6834baefbbfd5444c47b, type: 2}
         m_MethodName: Raise
         m_Mode: 1
         m_Arguments:
@@ -347,7 +268,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  curr_target: {fileID: 11400000, guid: 59835c0a9d3a7bb44b7ef2a5ac3060bb, type: 2}
 --- !u!1 &6793205598038069198
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,19 +325,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db09e89241dcf674ba9591473a31691e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pl_missed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 02ff49528ddd0a246af2152d32a0ef84, type: 2}
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
