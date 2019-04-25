@@ -7,18 +7,18 @@ using PathCreation;
 public class AimManager : MonoBehaviour
 {
     public PathCreator aim_spawn_area;
-    public float max_deviation;
-    public float aim_walk_path_prolong_dist;
+    
+    public float aim_walk_path_prolong_angle;
+    public int aim_path_points_num;
+
     public VertexPath vertex_aim_path;
     public float aim_move_speed = 0.0f;
 
+    public float max_deviation;
     public float min_angle;
     public float max_angle;
-    public float min_dist;
-    public float max_dist;
 
     public AnimationCurve deviation_from_angle;
-    // public AnimationCurve deviation_from_dist;
 
     public PathCreator char_fly_path;
     public VertexPath char_fly_vertex_path;
@@ -59,7 +59,7 @@ public class AimManager : MonoBehaviour
         PaintAimPath();
 
         ///
-         // SetUpAimPath();
+        // SetUpAimPath();
         ///
     }
 
@@ -122,6 +122,7 @@ public class AimManager : MonoBehaviour
 
     public void StartMovingToTarget()
     {
+        fly_path_fraction = 0.0f;
         moving_to_target = true;
     }
 
@@ -130,7 +131,7 @@ public class AimManager : MonoBehaviour
         moving_to_target = false;
     }
 
-    public Vector3 test_aim_start_pos;
+    public Transform test_aim_start_pos;
 
     [ContextMenu("SetUpAimPath")]
     public void SetUpAimPath()
@@ -141,13 +142,33 @@ public class AimManager : MonoBehaviour
 
         // Get Aim Random Start Position
         Vector3 aim_start_pos = CustomRandomPointOnArea();
-
-        // Vector3 aim_start_pos = GameObject.Find("MiddleFocus").transform.position;
+        //  Vector3 aim_start_pos = test_aim_start_pos.position;
         aim_start_pos.y = char_pos.y;
 
         // Get Current Target's Position
         Vector3 target_pos = curr_target.v.gameObject.GetComponent<Transform>().position;
         // target_pos.y = char_pos.y;
+        
+        // Calc Path Deviation
+        Vector3 char_pos_to_target = target_pos - char_pos;
+        Vector3 char_pos_to_aim_start = aim_start_pos - char_pos;
+
+        // Calculate angle deviation
+        float angle_deviation = Vector3.SignedAngle(char_pos_to_target, char_pos_to_aim_start, Vector3.up);
+        float sign = angle_deviation > 0 ? -1.0f : 1.0f;
+        angle_deviation = Mathf.Abs(angle_deviation);
+        angle_deviation = Mathf.Clamp((angle_deviation / max_angle), min_angle / max_angle, 1.0f);
+        angle_deviation = deviation_from_angle.Evaluate(angle_deviation) * sign;
+        float deviation = angle_deviation * max_deviation;
+
+        vertex_aim_path = GetPathFromDeviation(target_pos, aim_start_pos, deviation);
+
+        SetAimAtFraction(0.0f);
+    }
+
+    private VertexPath GetPathFromDeviation(Vector3 target_pos, Vector3 aim_start_pos, float deviation)
+    {
+        // Debug.Log("target_pos: " + target_pos + "aim_start_pos: " + aim_start_pos + "deviation: " + deviation);
 
         //Calculate Middle Point
         Vector3 middle_point = new Vector3(0.0f, 0.0f, 0.0f);
@@ -156,50 +177,33 @@ public class AimManager : MonoBehaviour
         middle_point.x = aim_start_pos.x + (aim_start_to_target.x / 2);
         middle_point.y = aim_start_pos.y + (aim_start_to_target.y / 2);
         middle_point.z = aim_start_pos.z + (aim_start_to_target.z / 2);
-        
-        // Calc Path Deviation
-        Vector3 char_pos_to_target = target_pos - char_pos;
-        Vector3 char_pos_to_aim_start = aim_start_pos - char_pos;
 
-        // Calculate angle deviation
-        float angle_deviation = Vector3.SignedAngle(char_pos_to_target, char_pos_to_aim_start, Vector3.up);
-        float sign = angle_deviation > 0 ? 1.0f : -1.0f;
-        angle_deviation = Mathf.Abs(angle_deviation);
+        // Calculate Circle Center
+        Vector3 deviation_norm = Vector3.Normalize(Vector3.Cross(Vector3.up, aim_start_to_target));
+        Vector3 circle_center = middle_point + (deviation_norm * deviation);
 
-        // Debug.Log("a1: " + angle_deviation);
-        angle_deviation = Mathf.Clamp((angle_deviation / max_angle), min_angle / max_angle, 1.0f);
-        // Debug.Log("a2: " + angle_deviation);
-        angle_deviation = deviation_from_angle.Evaluate(angle_deviation) * sign;
-        // Debug.Log("a3: " + angle_deviation);
+        Debug.DrawLine(middle_point, circle_center);
 
-        // Calculate distance deviation
-        //float dist_deviation = aim_start_to_target.magnitude;
-        //dist_deviation = Mathf.Clamp((dist_deviation / max_dist), min_dist / max_dist, 1.0f);
-        //dist_deviation = deviation_from_dist.Evaluate(dist_deviation);
-        // Debug.Log("d: " + dist_deviation);
+        // Calculate Angle between points and Angle Step
+        float sign = deviation > 0 ? 1.0f : -1.0f;
+        float angle = Vector3.Angle(aim_start_pos - circle_center, target_pos - circle_center) + aim_walk_path_prolong_angle;
+        float angle_step = angle / aim_path_points_num * sign;
 
-        float deviation = angle_deviation * max_deviation;
-        Vector3 deviation_norm = Vector3.Normalize(Vector3.Cross(new Vector3(0.0f, 1.0f, 0.0f), aim_start_to_target));
+        // Prepare Path Points for Creating
+        Vector3 curr_aim_path_point = aim_start_pos - circle_center;
+        Vector3[] path_points = new Vector3[aim_path_points_num];
 
-        middle_point = middle_point + (deviation_norm * deviation);
+        for (int i = 0; i < path_points.Length; i++)
+        {
+            //Debug.Log(i + " p: " + (curr_aim_path_point + circle_center));
+            // Pushing new point to an array
+            path_points[i] = curr_aim_path_point + circle_center;
 
-        Vector3[] points = { aim_start_pos, middle_point, target_pos };
+            // Moving curr_angle each step
+            curr_aim_path_point = Quaternion.Euler(0.0f, angle_step, 0.0f) * curr_aim_path_point;
+        }
 
-        BezierPath bezier_aim_path  = new BezierPath(points);
-        vertex_aim_path = new VertexPath(bezier_aim_path);
-
-        // Get path's forward vector
-        Vector3 path_end_forward_vect = vertex_aim_path.GetDirection(0.99f);
-        Vector3 path_end_point = vertex_aim_path.GetPoint(0.99f);
-        path_end_point += path_end_forward_vect * aim_walk_path_prolong_dist;
-
-        // Modify bezier path
-        bezier_aim_path.AddSegmentToEnd(path_end_point);
-
-        // Create new modified vertex path
-        vertex_aim_path = new VertexPath(bezier_aim_path);
-
-        SetAimAtFraction(0.0f);
+        return new VertexPath( new BezierPath(path_points) );
     }
 
     private Vector3 CustomRandomPointOnArea()

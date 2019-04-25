@@ -30,7 +30,7 @@ public class HitChecker : MonoBehaviour
 
         if (other_obj == TargetCollider)
         {
-            Debug.Log("Target Will Be Hit!");
+            // Debug.Log("Target Will Be Hit!");
             // Pl hit the target
             will_hit.Invoke();
         }
@@ -42,6 +42,11 @@ public class HitChecker : MonoBehaviour
         
         // Debug.Log("x: " + char_fly_vertex_path.GetPoint(0.999f).x + "z: " + char_fly_vertex_path.GetPoint(0.999f).z);
         transform.position = char_fly_vertex_path.GetPoint(0.999f);
+    }
+
+    public void MoveAway()
+    {
+        transform.position = new Vector3(0.0f, 100.0f, 0.0f);
     }
 
 }

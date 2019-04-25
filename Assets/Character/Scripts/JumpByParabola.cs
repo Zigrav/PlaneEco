@@ -94,12 +94,12 @@ public class JumpByParabola : MonoBehaviour
 
         if(path_fraction >= 1.0f)
         {
-            Debug.Log("> 1: " + path_fraction);
+            // Debug.Log("> 1: " + path_fraction);
 
             if (will_hit)
             {
                 // Player hit
-                Debug.Log("Pl hit");
+                // Debug.Log("Pl hit");
 
                 will_hit = false;
 
@@ -108,7 +108,8 @@ public class JumpByParabola : MonoBehaviour
             else
             {
                 // Player missed
-                Debug.Log("Pl missed");
+                // Debug.Log("Pl missed");
+
                 pl_missed.Invoke();
             }
 
