@@ -27,7 +27,11 @@ public class RandPosOnEvent : MonoBehaviour
         // Should Use Reflect probes
         bool should_use_reflected = (Random.value > 0.5f);
 
-        if(should_use_reflected)
+        //////////// TO DELETE
+        should_use_reflected = false;
+        //////////// TO DELETE
+
+        if (should_use_reflected)
         {
             // Debug.Log("Reflected");
             transform.position = RandPointInProbes.Get(probe_manager.reflected_probes);
