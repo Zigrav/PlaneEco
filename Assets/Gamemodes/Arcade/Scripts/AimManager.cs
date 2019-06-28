@@ -36,16 +36,21 @@ public class AimManager : MonoBehaviour
 
     private bool moving_to_target = false;
 
-    public float aim_render_fraction = 0.8f;
-
     public GameObject test_thing;
 
-    private LineRenderer line_renderer;
+    // private LineRenderer line_renderer;
+
+    public float aim_start_fraction;
+    public float aim_end_fraction;
+    public int aim_objects_count;
+    public GameObject aim_object;
+    private GameObject[] aim_objects;
 
     // Awake is called before the first frame update
     void Awake()
     {
-        line_renderer = GetComponent<LineRenderer>();
+        // line_renderer = GetComponent<LineRenderer>();
+        InstantiateAimObjects();
 
         aim_spawn_area_max_x = aim_spawn_area.path.bounds.center.x + aim_spawn_area.path.bounds.extents.x;
         aim_spawn_area_min_x = aim_spawn_area.path.bounds.center.x - aim_spawn_area.path.bounds.extents.x;
@@ -70,7 +75,9 @@ public class AimManager : MonoBehaviour
             fly_path_fraction += (aim_move_speed / vertex_aim_path.length);
 
             char_fly_vertex_path = SetAimAtFraction(fly_path_fraction);
-            AdjustRendererByAim(char_fly_vertex_path);
+
+            AdjustObjectsByAim(char_fly_vertex_path);
+            // AdjustRendererByAim(char_fly_vertex_path);
         }
     }
 
@@ -92,19 +99,50 @@ public class AimManager : MonoBehaviour
         return new VertexPath(char_fly_path.bezierPath);
     }
 
-    void AdjustRendererByAim(VertexPath char_fly_vertex_path)
+    //void AdjustRendererByAim(VertexPath char_fly_vertex_path)
+    //{
+    //    float fraction_step = aim_render_fraction / char_fly_path_fractions;
+    //    Vector3[] line_renderer_points = new Vector3[char_fly_path_fractions];
+
+    //    for (int i = 0; i < char_fly_path_fractions; i++)
+    //    {
+    //        float fraction = fraction_step * i;
+
+    //        line_renderer_points[i] = char_fly_vertex_path.GetPoint(fraction);
+    //    }
+
+    //    line_renderer.SetPositions(line_renderer_points);
+    //}
+
+    void InstantiateAimObjects()
     {
-        float fraction_step = aim_render_fraction / 10.0f;
-        Vector3[] line_renderer_points = new Vector3[10];
+        aim_objects = new GameObject[aim_objects_count];
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < aim_objects_count; i++)
         {
-            float fraction = fraction_step * i;
-
-            line_renderer_points[i] = char_fly_vertex_path.GetPoint(fraction);
+            aim_objects[i] = Instantiate(aim_object);
         }
+    }
 
-        line_renderer.SetPositions(line_renderer_points);
+    void AdjustObjectsByAim(VertexPath char_fly_vertex_path)
+    {
+        // aim_start_fraction = 0.1
+        // aim_end_fraction = 0.8
+        // aim_objects_count = 4
+
+        float fraction = aim_start_fraction;
+        float fraction_step = (aim_end_fraction - aim_start_fraction) / (aim_objects_count - 1);
+
+        for (int i = 0; i < aim_objects_count; i++)
+        {
+            if (i > 0) fraction += fraction_step;
+
+            Vector3 object_pos = char_fly_vertex_path.GetPoint(fraction);
+            Vector3 object_dir = Vector3.Normalize(char_fly_vertex_path.GetPoint(fraction + 0.01f) - object_pos);
+
+            aim_objects[i].transform.position = object_pos;
+            aim_objects[i].transform.forward = object_dir;
+        }
     }
 
     void PaintAimPath()
