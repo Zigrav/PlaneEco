@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - OnPlatformPass
+  - GODrone
+  - DroneSpawner
   layers:
   - Default
   - TransparentFX

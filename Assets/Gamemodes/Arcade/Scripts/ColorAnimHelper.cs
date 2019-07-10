@@ -34,6 +34,11 @@ public class ColorAnimHelper : MonoBehaviour
         }
     }
 
+    public void TestFunction(string name)
+    {
+        Debug.Log(name);
+    }
+
     public void Prepare()
     {
         PreparePlatform prep_platf = GetComponent<PreparePlatform>();

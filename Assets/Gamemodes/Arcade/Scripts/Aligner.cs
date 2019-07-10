@@ -19,9 +19,12 @@ public class Aligner : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            float aligned_x = Mathf.Round(child.position.x / 0.8660254f) * 0.8660254f;
-            float aligned_z = Mathf.Round(child.position.z / 0.5f) * 0.5f;
-            child.position = new Vector3(aligned_x, child.position.y, aligned_z);
+            //Debug.Log(child.localPosition);
+            float aligned_x = Mathf.Round(child.localPosition.x / 0.8660254f) * 0.8660254f;
+            float aligned_z = Mathf.Round(child.localPosition.z / 0.5f) * 0.5f;
+            //Debug.Log(aligned_z);
+            child.localPosition = new Vector3(aligned_x, child.localPosition.y, aligned_z);
+            //Debug.Log(child.localPosition);
         }
     }
 }

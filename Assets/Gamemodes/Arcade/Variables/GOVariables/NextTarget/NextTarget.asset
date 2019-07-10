@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530a46acad8a7f4a8b29cb27af46903, type: 3}
+  m_Name: NextTarget
+  m_EditorClassIdentifier: 
+  DeveloperDescription: 
+  e_new: {fileID: 11400000, guid: 8574362ac819c1f4382423702c164d51, type: 2}
+  e_no: {fileID: 11400000, guid: f4ec6d18efd36b3488e3a39b13b584a8, type: 2}
+  godrone_prefab: {fileID: 0}

@@ -8,15 +8,9 @@ public class HitChecker : MonoBehaviour
 {
     public UnityEvent will_hit;
 
-    public TargetVariable curr_target;
+    public GOVariable curr_target;
     
-    private AimManager aim_manager;
-    private VertexPath char_fly_vertex_path;
-
-    private void Awake()
-    {
-        aim_manager = GameObject.Find("AimManager").GetComponent<AimManager>();
-    }
+    public PathCreator path;
 
     void OnTriggerEnter(Collider other)
     {
@@ -25,23 +19,27 @@ public class HitChecker : MonoBehaviour
         // Find the GameObject that HitChecker has collided with
         GameObject other_obj = other.gameObject;
 
-        // Find the TargetCollider of the current target
-        GameObject TargetCollider = curr_target.v.gameObject.transform.Find("TargetCollider").gameObject;
+        Debug.Log("Collided with: " + other.gameObject);
 
-        if (other_obj == TargetCollider)
-        {
-            // Debug.Log("Target Will Be Hit!");
-            // Pl hit the target
-            will_hit.Invoke();
-        }
+        // Find the TargetCollider of the current target
+        // GameObject TargetCollider = curr_target.go.gameObject.transform.Find("TargetCollider").gameObject;
+
+        // Debug.Log(TargetCollider);
+
+        //if (other_obj == TargetCollider)
+        //{
+        //    // Debug.Log("Target Will Be Hit!");
+        //    // Pl hit the target
+        //    will_hit.Invoke();
+        //}
     }
 
     public void MoveToCharJumpPathEnd()
     {
-        char_fly_vertex_path = aim_manager.char_fly_vertex_path;
+        VertexPath char_fly_path = path.path;
         
         // Debug.Log("x: " + char_fly_vertex_path.GetPoint(0.999f).x + "z: " + char_fly_vertex_path.GetPoint(0.999f).z);
-        transform.position = char_fly_vertex_path.GetPoint(0.999f);
+        transform.position = char_fly_path.GetPoint(0.999f);
     }
 
     public void MoveAway()

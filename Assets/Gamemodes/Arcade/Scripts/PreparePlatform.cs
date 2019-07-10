@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public static class ExtensionMethods
 {
@@ -24,8 +25,8 @@ public class PreparePlatform : MonoBehaviour
     public Material to_mat_1;
     public Material to_mat_2;
 
-    public GameObject[] infrastructure;
-    public GameObject[] infrastructure_PX;
+    public List<GameObject> infrastructure;
+    public List<GameObject> infrastructure_PX;
 
     private List<GameObject> PX;
 
@@ -49,9 +50,12 @@ public class PreparePlatform : MonoBehaviour
     float starting_vfx_time = 0.0f;
 
     public GameObject target;
+    public UnityEvent OnUpdate;
+    public FloatVariable var_test;
 
     private void Start()
     {
+        // test.v = var_test;
         animator = GetComponent<Animator>();
 
         from_mat_0 = new Material(from_mat_0);
@@ -64,8 +68,6 @@ public class PreparePlatform : MonoBehaviour
         CollectPlatformObjects();
         PrepareHexes();
 
-        PrepareTarget();
-
         GenerateOffsets();
 
         GetComponent<ColorAnimHelper>().Prepare();
@@ -75,6 +77,8 @@ public class PreparePlatform : MonoBehaviour
     void Update()
     {
         float passed_time = Time.time - vfx_start_time;
+
+        OnUpdate.Invoke();
 
         if (is_vfx_starting)
         {
@@ -90,14 +94,14 @@ public class PreparePlatform : MonoBehaviour
 
     }
 
-    private void GenerateOffsets()
+    public void GenerateOffsets()
     {
         infrastructure_offsets = new List<float>();
         PX_offsets = new List<float>();
 
         float max_offset = 0.0f;
 
-        for (int i = 0; i < infrastructure.Length; i++)
+        for (int i = 0; i < infrastructure.Count; i++)
         {
             infrastructure_offsets.Add(Random.value.Remap(0, 1, infrastructure_offsets_min, infrastructure_offsets_max));
             // Debug.Log(infrastructure_offsets[i]);
@@ -126,7 +130,7 @@ public class PreparePlatform : MonoBehaviour
     [ContextMenu("RestartVFX")]
     public void RestartVFX()
     {
-        for (int i = 0; i < infrastructure.Length; i++)
+        for (int i = 0; i < infrastructure.Count; i++)
         {
             Animator infr_animator = infrastructure[i].GetComponent<Animator>();
             infr_animator.SetInteger("expand", -1);
@@ -157,6 +161,7 @@ public class PreparePlatform : MonoBehaviour
 
                 if (infr_animator == null) throw new System.Exception(infrastructure[i].name + " does not have an animator component");
 
+                // Debug.Log(infrastructure[i].name + ": " + stuff_anim_number);
                 infr_animator.SetInteger("expand", stuff_anim_number);
 
                 infrastructure_offsets[i] = -1;
@@ -217,12 +222,6 @@ public class PreparePlatform : MonoBehaviour
                 // Debug.Log(platform_object);
             }
         }
-    }
-
-    private void PrepareTarget()
-    {
-        Vector3 new_target_pos = GameObject.Find("target_place").transform.position;
-        GameObject new_target = Instantiate(target, new_target_pos, Quaternion.identity);
     }
 
     private void PrepareHexes()

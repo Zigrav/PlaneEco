@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5141983660221496200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5141983660221496196}
+  - component: {fileID: 5141983660221496197}
+  - component: {fileID: 5141983660221496202}
+  - component: {fileID: 5141983660221496203}
+  - component: {fileID: 5141983660221496199}
+  m_Layer: 0
+  m_Name: ArcPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5141983660221496196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141983660221496200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5141983660221496197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141983660221496200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e842ada9c22ed44b798a2d8bd86197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  first_point: {fileID: 11400000, guid: 1b72aa6c9aae7964c8c0d4d7d08b76c5, type: 2}
+  second_point: {fileID: 11400000, guid: 56bfaca7b7cfd1045840df440f3235ed, type: 2}
+  aim_path_points_num: 20
+  prolong_angle: 5
+  deviation_from_angle: {fileID: 5141983660221496203}
+  corrupted_data: 0
+--- !u!114 &5141983660221496202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141983660221496200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 137974756f8fa10438edcc4535d888ea, type: 2}
+  Order: 2
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5141983660221496197}
+        m_MethodName: CreateArcPath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &5141983660221496203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141983660221496200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63709af3f08d54c448e90df76184f0b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deviated_point: {fileID: 11400000, guid: 1b72aa6c9aae7964c8c0d4d7d08b76c5, type: 2}
+  target_point: {fileID: 11400000, guid: 56bfaca7b7cfd1045840df440f3235ed, type: 2}
+  origin_point: {fileID: 11400000, guid: 5a5477f7660de1a458b6caea53d81873, type: 2}
+  deviation_from_angle:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.12
+      value: 1
+      inSlope: -0.7766049
+      outSlope: -0.7766049
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.12584797
+    - serializedVersion: 3
+      time: 1
+      value: 0.15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  min_angle: 0
+  max_angle: 40
+  max_deviation: 12
+  corrupted_data: 0
+--- !u!114 &5141983660221496199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141983660221496200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e16530399955f584a83b677320c3d231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

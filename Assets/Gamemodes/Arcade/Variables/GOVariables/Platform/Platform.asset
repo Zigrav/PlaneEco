@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530a46acad8a7f4a8b29cb27af46903, type: 3}
+  m_Name: Platform
+  m_EditorClassIdentifier: 
+  DeveloperDescription: Platform on which player is jumping.
+  e_new: {fileID: 11400000, guid: f84eea821eda7334584704553404e9ee, type: 2}
+  e_no: {fileID: 11400000, guid: bfad93673bd7e5b4b913b97f96a13b2d, type: 2}
+  godrone_prefab: {fileID: 1970634999710455682, guid: e5ccfc9b6bf19ff4287aee468ef6896e,
+    type: 3}
