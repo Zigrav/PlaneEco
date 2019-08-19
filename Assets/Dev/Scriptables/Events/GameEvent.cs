@@ -14,7 +14,7 @@ public class GameEvent : ScriptableObject
     /// <summary>
     /// The list of listeners that this event will notify if it is raised.
     /// </summary>
-    private List<GameEventListener> eventListeners =
+    public List<GameEventListener> eventListeners =
         new List<GameEventListener>();
 
     public void OnEnable()

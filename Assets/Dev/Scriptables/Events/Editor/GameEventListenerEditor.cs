@@ -195,6 +195,9 @@ public class GameEventListenerEditor : Editor
         SerializedProperty Response = so.FindProperty("Response");
         EditorGUILayout.PropertyField(Response, GUIContent.none, true); // True means show children
 
+        SerializedProperty delay_frames = so.FindProperty("delay_frames");
+        EditorGUILayout.PropertyField(delay_frames, new GUIContent("Delay"), true); // True means show children
+
         so.ApplyModifiedProperties(); // Remember to apply modified properties
     }
 }

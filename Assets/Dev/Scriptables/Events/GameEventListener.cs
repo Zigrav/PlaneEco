@@ -4,6 +4,8 @@
 // Author: Ryan Hipple
 // Date:   10/04/17
 // ----------------------------------------------------------------------------
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -95,6 +97,11 @@ public class GameEventListener : MonoBehaviour
     public int second_int;
     public float second_float;
 
+    public int delay_frames = 0;
+
+    private bool is_preparing = false;
+    private int delay_frames_left = 0;
+
     private void OnEnable()
     {
         Event.RegisterListener(this);
@@ -105,9 +112,31 @@ public class GameEventListener : MonoBehaviour
         Event.UnregisterListener(this);
     }
 
+    public void FixedUpdate()
+    {
+        if(is_preparing)
+        {
+            delay_frames_left--;
+            if (delay_frames_left == 0)
+            {
+                OnEventRaised();
+                is_preparing = false;
+            }
+        }
+    }
+
     [ContextMenu("OnEventRaised")]
     public void OnEventRaised()
     {
+        // If This Listener Should Delay Invoke And It Is Not Preparing
+        if (delay_frames != 0 && !is_preparing)
+        {
+            Debug.Log("delayed on " + delay_frames + " frames");
+            delay_frames_left = delay_frames;
+            is_preparing = true;
+            return;
+        }
+
         if (UseConditions)
         {
             if (TestConditions())

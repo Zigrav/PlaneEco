@@ -7,13 +7,26 @@ public class TODELETE : MonoBehaviour
     public GameEvent test_event_3;
     public GameObject obj_0;
 
-    private void Start()
+    public FloatVariable mana_cost;
+    public GameObject cam_obj;
+    public Camera cam;
+
+    //private void OnValidate()
+    //{
+    //    if (fl == null)
+    //    {
+    //        fl = ScriptableObject.CreateInstance("FloatVariable") as FloatVariable;
+    //    }
+    //}
+
+    public void Start()
     {
-        Debug.Log("time slowed down");
-        Time.timeScale = 0.05f;
-        Time.fixedDeltaTime = 0.05f * 0.05f;
+        mana_cost = ScriptableObject.CreateInstance("FloatVariable") as FloatVariable;
+    }
 
-
+    private void Update()
+    {
+        Debug.Log("go: " + mana_cost.v);
     }
 
     //private void Start()

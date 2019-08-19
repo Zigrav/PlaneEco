@@ -1,0 +1,406 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &245462658203698867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245462658203698864}
+  - component: {fileID: 245462658203698865}
+  - component: {fileID: 245462658203698874}
+  - component: {fileID: 245462658203698871}
+  - component: {fileID: 245462658203698875}
+  - component: {fileID: 9118365334344768028}
+  - component: {fileID: 6581182747691744824}
+  - component: {fileID: 245462658203698868}
+  - component: {fileID: 5805476796281631908}
+  - component: {fileID: 245462658203698866}
+  - component: {fileID: 245462658203698870}
+  m_Layer: 0
+  m_Name: AimPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &245462658203698864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.5396976, y: 0.033181462, z: 5.826193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &245462658203698865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048bf3062d3751f49a1ad1d498719527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: {fileID: 245462658203698868}
+  path_anim: {fileID: 245462658203698871}
+  is_path_closed: 0
+  corrupted_path: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnLateUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &245462658203698874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+--- !u!114 &245462658203698871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b0666896c80a04483860e09831fc65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  component_with_vertex_path: {fileID: 0}
+  path_generator: {fileID: 245462658203698865}
+  speed_curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speed_coeff: 1
+  period: 1.0099994
+  MoveInWorldCoordinates: 0
+  min_speed: 0.1
+  stop_fraction: 0.99
+  end_of_path_instruction: 2
+  is_anim_running: 0
+  corrupted_path: 0
+  calc_position: {x: 0, y: 0, z: 0}
+  path_forward: {x: 0, y: 0, z: 0}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnFixedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnFixedUpdateAnim:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPathEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &245462658203698875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+--- !u!114 &9118365334344768028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+--- !u!114 &6581182747691744824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 0}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+--- !u!114 &245462658203698868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e5ac92bc18f545cc84cd886ece82b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorData:
+    _bezierPath:
+      points:
+      - {x: -6.5396976, y: 0.033181462, z: 5.826193}
+      - {x: -5.5396976, y: 0.033181462, z: 5.826193}
+      - {x: -3.5396976, y: 0.033181462, z: 5.826193}
+      - {x: -2.5396976, y: 0.033181462, z: 5.826193}
+      isClosed: 0
+      localPosition: {x: 0, y: 0, z: 0}
+      space: 0
+      controlMode: 3
+      autoControlLength: 0.3
+      boundsUpToDate: 1
+      pivot: {x: -4.5396976, y: 0.033181462, z: 5.826193}
+      bounds:
+        m_Center: {x: -4.5396976, y: 0.033181462, z: 5.826193}
+        m_Extent: {x: 2, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+      perAnchorNormalsAngle:
+      - 0
+      - 0
+      globalNormalsAngle: 0
+      flipNormals: 0
+    vertexPathUpToDate: 0
+    vertexPathMaxAngleError: 0.3
+    vertexPathMinVertexSpacing: 0.01
+    pathTransformationEnabled: 0
+    showPathBounds: 0
+    showPerSegmentBounds: 0
+    displayAnchorPoints: 1
+    displayControlPoints: 1
+    bezierHandleScale: 1
+    globalDisplaySettingsFoldout: 0
+    keepConstantHandleSize: 0
+    vertexHandleSize: 0.2
+    showNormalsInVertexMode: 0
+    showDisplayOptions: 0
+    showPathOptions: 1
+    showVertexPathDisplayOptions: 0
+    showVertexPathOptions: 1
+    showNormals: 0
+    showNormalsHelpInfo: 0
+    tabIndex: 0
+  initialized: 1
+--- !u!114 &5805476796281631908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0ee3c2cdc4b484082be0f668cb3524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  first_object: {fileID: 0}
+  second_object: {fileID: 0}
+  is_local: 0
+  pos_offset: {x: 0, y: 0, z: 0}
+--- !u!114 &245462658203698866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19f284ad0f53094cb61c79ef1b65e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_average: 0
+  average_list:
+  - {fileID: 11400000, guid: 5a5477f7660de1a458b6caea53d81873, type: 2}
+  - {fileID: 11400000, guid: 56bfaca7b7cfd1045840df440f3235ed, type: 2}
+  point: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  draw_anchor: 0
+  corrupted_data: 0
+  anchor_pos: {x: 0, y: 0, z: 0}
+--- !u!114 &245462658203698870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245462658203698867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19f284ad0f53094cb61c79ef1b65e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  is_average: 0
+  average_list: []
+  point: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  draw_anchor: 0
+  corrupted_data: 0
+  anchor_pos: {x: 0, y: 0, z: 0}
