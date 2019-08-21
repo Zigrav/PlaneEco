@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2c23031119ab84a9f8db43ccbf1ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  is_pointer_hold: {fileID: 0}
   InputPress:
     m_PersistentCalls:
       m_Calls:

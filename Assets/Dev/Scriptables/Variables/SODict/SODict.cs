@@ -12,6 +12,7 @@ public class SODict : SerializedScriptableObject
     [SerializeField]
     private Dictionary<string, ScriptableObject> core_value = new Dictionary<string, ScriptableObject>();
     public data_changes_enum data_changes = data_changes_enum.persistent;
+    [HideInInspector]
     public created_type_enum created_type = created_type_enum.editor_created;
 
 #if UNITY_EDITOR

@@ -8,6 +8,7 @@ public class BoolVariable : ScriptableObject
     [SerializeField]
     private bool core_value;
     public data_changes_enum data_changes = data_changes_enum.persistent;
+    [HideInInspector]
     public created_type_enum created_type = created_type_enum.editor_created;
 
 #if UNITY_EDITOR

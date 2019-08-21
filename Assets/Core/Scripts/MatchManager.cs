@@ -35,6 +35,25 @@ public class MatchManager : MonoBehaviour
     public IntVariable platforms_passed;
     public BoolVariable is_right;
 
+    [SerializeField]
+    private SOList difficulty_list = null;
+    [SerializeField]
+    private IntVariable levels_passed = null;
+    [SerializeField]
+    private IntVariable currlevel_platforms_count = null;
+    [SerializeField]
+    private IntVariable currlevel_platforms_passed = null;
+    [SerializeField]
+    private FloatVariable content_border_dist = null;
+
+    [SerializeField]
+    private GameEvent level_passed = null;
+    [SerializeField]
+    private GameEvent level_failed = null;
+
+    [SerializeField]
+    private float level_height_step = 0.0f;
+
     public float height_step;
     public float width_step;
     public float platform_angle;
@@ -52,23 +71,10 @@ public class MatchManager : MonoBehaviour
     private int next_platform_num;
     private float dist_z = 0.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // PrepareLevelStart();
-    }
-
     public void PrepareLevelStart()
     {
-        Debug.Log("prepare level: " + gameObject.name);
-        // Decide How Much Platforms To Create
-        // TODO
-        float platform_count = 9;
+        // Decide From Which Platform To Start
         next_platform_num = platforms_passed.v;
-        // TODO
-
-        // Decide From Which Platform To Start (Left or Right)
-        // TODO
         if (next_platform_num % 2 == 0)
         {
             is_right.v = true;
@@ -77,17 +83,17 @@ public class MatchManager : MonoBehaviour
         {
             is_right.v = false;
         }
-        // TODO
 
+        // UploadPlatformCollider
         UploadPlatformCollider();
 
+        // UploadMap with an eco stuff
         UploadMap();
 
-        for (int i = 0; i < platform_count; i++)
-        {
-            CreateNextTile();
-        }
+        // Create The Level
+        CreateLevel();
 
+        // Do the starting stuff
         next_heliport.go = heliports.Get(0);
         next_platform.go = platforms.Get(0);
         next_target.go = targets.Get(0);
@@ -101,8 +107,39 @@ public class MatchManager : MonoBehaviour
         curr_heliport.go = heliports.Get(0);
         curr_platform.go = platforms.Get(0);
         curr_target.go = targets.Get(0);
+    }
 
-        Debug.Log("MM Finished");
+    public void CreateLevel()
+    {
+        // Local level variable to predict how much platforms_count will be in the future
+        int predicted_level = levels_passed.v;
+
+        // Fill the level with platforms until fog will do its job
+        while(dist_z < content_border_dist.v)
+        {
+            // Get the predicted level_platforms_count
+            SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
+            int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+            // Create tiles
+            for (int i = 0; i < level_platforms_count; i++)
+            {
+                dist_z += height_step;
+                CreateNextTile();
+            }
+        
+            // Crate spacing between levels
+            dist_z += level_height_step;
+
+            // Increase predicted level
+            predicted_level++;
+        }
+
+        // Update the real level progress data
+        SODict level_difficulty_elem = GetElemByLevel.Get(levels_passed.v, difficulty_list);
+        currlevel_platforms_count.v = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+        currlevel_platforms_passed.v = 0;
     }
 
     public void CreateNextTile()
@@ -111,7 +148,6 @@ public class MatchManager : MonoBehaviour
         Quaternion rot;
 
         // Define pos and rot of the platform
-        dist_z += height_step;
         if (next_platform_num % 2 == 0)
         {
             pos = new Vector3(width_step, 0.0f, dist_z);
@@ -181,10 +217,34 @@ public class MatchManager : MonoBehaviour
         maps.Add(map);
     }
 
+    // Called on pl_hit event. Used to reward pl for passing platform / level
+    public void ProcessPlMissed()
+    {
+        level_failed.Raise();
+    }
+
+    // Called on pl_hit event. Used to reward pl for passing platform / level
+    public void ProcessPlHit()
+    {
+        // Platforms of the current level passed
+        currlevel_platforms_passed.v++;
+
+        // Platforms passed in general by this player
+        platforms_passed.v++;
+
+        // If level was finished
+        if (currlevel_platforms_passed.v == currlevel_platforms_count.v)
+        {
+            // Levels passed in general by this player
+            levels_passed.v++;
+
+            level_passed.Raise();
+        }
+    }
+
+    // Called on platform_passed event. Used to move curr things to the next platform
     public void Proceed()
     {
-        Debug.Log("Proceed is called");
-
         is_right.v = !is_right.v;
 
         heliports.Remove(heliports.Get(0));

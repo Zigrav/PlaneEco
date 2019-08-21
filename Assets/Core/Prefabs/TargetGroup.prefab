@@ -68,11 +68,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: 137974756f8fa10438edcc4535d888ea, type: 2}
+  Order: 0
+  UseConditions: 0
   Response:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+  delay_frames: 0
 --- !u!114 &7788786514787528816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,5 +108,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_group: {fileID: 6214639580509933472}
-  target: {fileID: 11400000, guid: 56bfaca7b7cfd1045840df440f3235ed, type: 2}
-  heliport: {fileID: 11400000, guid: 5a5477f7660de1a458b6caea53d81873, type: 2}
+  target: {fileID: 0}

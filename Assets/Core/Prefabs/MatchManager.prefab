@@ -44,6 +44,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9ea67fc351e204a8b08dfcd05a3bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platforms_set: []
+  platform_colliders_set: []
+  targets_set: []
+  heliports_set: []
+  maps_set: []
+  curr_platform: {fileID: 0}
+  curr_platform_collider: {fileID: 0}
+  curr_target: {fileID: 0}
+  curr_heliport: {fileID: 0}
+  curr_map: {fileID: 0}
+  next_platform: {fileID: 0}
+  next_target: {fileID: 0}
+  next_heliport: {fileID: 0}
+  platforms: {fileID: 0}
+  platform_colliders: {fileID: 0}
+  targets: {fileID: 0}
+  heliports: {fileID: 0}
+  maps: {fileID: 0}
+  platforms_passed: {fileID: 0}
+  is_right: {fileID: 0}
+  difficulty_list: {fileID: 0}
+  levels_passed: {fileID: 0}
+  currlevel_platforms_count: {fileID: 0}
+  currlevel_platforms_passed: {fileID: 0}
+  content_border_dist: {fileID: 0}
+  level_passed: {fileID: 0}
+  level_failed: {fileID: 0}
+  level_height_step: 0
+  height_step: 0
+  width_step: 0
+  platform_angle: 0
+  platform_scale: 0
+  target_height: 0
+  min_angle: 0
+  max_angle: 0
+  heliport_dist: 0
 --- !u!114 &1156005797658272832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,6 +93,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: 02ff49528ddd0a246af2152d32a0ef84, type: 2}
+  Order: 0
+  UseConditions: 0
   Response:
     m_PersistentCalls:
       m_Calls:
@@ -73,3 +111,23 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+  delay_frames: 0

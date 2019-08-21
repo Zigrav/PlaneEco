@@ -1,27 +1,37 @@
-﻿#define UNITY_STANDALONE
+﻿// #define UNITY_STANDALONE
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
+// UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
 
 public class PressReleaseEventSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private BoolVariable is_pointer_hold;
+
     public UnityEvent InputPress;
     public UnityEvent InputRelease;
 
     // Update is called once per frame
     void Update()
     {
-#if UNITY_STANDALONE || UNITY_WEBPLAYER
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
+            if (IsMouseOverUI()) return;
+
             InputPress.Invoke();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (!is_pointer_hold.v) return;
+
             InputRelease.Invoke();
         }
 
@@ -29,15 +39,54 @@ public class PressReleaseEventSpawner : MonoBehaviour
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
+            if(IsMouseOverUI()) return;
+
             InputPress.Invoke();
         }
 
         if (Input.touchCount > 0 && (Input.GetTouch(0).phase == TouchPhase.Canceled || Input.GetTouch(0).phase == TouchPhase.Ended))
         {
+            if (!is_pointer_hold.v) return;
+            
             InputRelease.Invoke();
         }
 
 #endif
 
+    }
+
+    private bool IsMouseOverUI()
+    {
+        bool is_mouse_over_ui = false;
+
+        PointerEventData pointer_event_data = new PointerEventData(EventSystem.current);
+
+#if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
+        pointer_event_data.position = Input.mousePosition;
+#else
+        pointer_event_data.position = Input.GetTouch(0).position;
+#endif
+
+        List<RaycastResult> raycast_results = new List<RaycastResult>();
+
+        EventSystem.current.RaycastAll(pointer_event_data, raycast_results);
+
+        for (int i = 0; i < raycast_results.Count; i++)
+        {
+            RaycastResult raycast_result = raycast_results[i];
+
+            if (raycast_result.gameObject.GetComponent<MouseUIClickthroughable>() != null)
+            {
+                raycast_results.RemoveAt(i);
+                i--;
+            }
+        }
+
+        if (raycast_results.Count > 0)
+        {
+            is_mouse_over_ui = true;
+        }
+
+        return is_mouse_over_ui;
     }
 }
