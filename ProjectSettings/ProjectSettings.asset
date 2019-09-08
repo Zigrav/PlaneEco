@@ -160,7 +160,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Zigrav.Jumper
+    Android: com.Zigrav.PlaneEco
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 18

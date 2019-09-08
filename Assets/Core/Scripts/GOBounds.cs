@@ -20,35 +20,58 @@ public class GOBounds : MonoBehaviour
     {
         List<MeshRenderer> meshes = new List<MeshRenderer>(GetComponentsInChildren<MeshRenderer>(true));
         List<GOBounds> gos_bounds = new List<GOBounds>(GetComponentsInChildren<GOBounds>());
-        // List<Collider2D> colliders2d_bounds = new List<Collider2D>(GetComponentsInChildren<Collider2D>());
 
         bounds = new Bounds(transform.position, new Vector3(0.0f, 0.0f, 0.0f));
 
-        // Debug.Log("before evertything: " + bounds);
+        //Debug.Log("before evertything: " + bounds);
 
-        // Debug.Log("m: " + meshes.Count);
-        // Debug.Log("gos bounds: " + gos_bounds.Count);
-        // Debug.Log("colliders2d: " + colliders2d_bounds.Count);
+        //Debug.Log("m: " + meshes.Count);
+        //Debug.Log("gos bounds: " + gos_bounds.Count);
 
         for (int i = 0; i < meshes.Count; i++)
         {
-            // Debug.Log("mesh_bounds: " + meshes[i].bounds);
+            //Debug.Log("mesh_bounds: " + meshes[i].bounds);
             bounds.Encapsulate(meshes[i].bounds);
+            //Debug.Log("bounds: " + bounds);
         }
 
         for (int i = 0; i < gos_bounds.Count; i++)
         {
-            // gos_bounds[i].SetBounds();
-            // Debug.Log("gos_bounds: " + gos_bounds[i].bounds);
-
+            //Debug.Log("gos_bounds: " + gos_bounds[i].bounds);
             bounds.Encapsulate(gos_bounds[i].bounds);
-            // Debug.Log("after gos_bounds: " + bounds);
+            //Debug.Log("bounds: " + bounds);
+        }
+    }
+
+    public void SetBounds(bool include_inactive)
+    {
+        List<MeshRenderer> meshes = new List<MeshRenderer>(GetComponentsInChildren<MeshRenderer>(include_inactive));
+        List<GOBounds> gos_bounds = new List<GOBounds>(GetComponentsInChildren<GOBounds>());
+
+        bounds = new Bounds(transform.position, new Vector3(0.0f, 0.0f, 0.0f));
+
+        //Debug.Log("before evertything: " + bounds);
+
+        //Debug.Log("m: " + meshes.Count);
+        //Debug.Log("gos bounds: " + gos_bounds.Count);
+
+        for (int i = 0; i < meshes.Count; i++)
+        {
+            //Debug.Log("mesh_bounds: " + meshes[i].bounds);
+            bounds.Encapsulate(meshes[i].bounds);
+            //Debug.Log("bounds: " + bounds);
+        }
+
+        for (int i = 0; i < gos_bounds.Count; i++)
+        {
+            //Debug.Log("gos_bounds: " + gos_bounds[i].bounds);
+            bounds.Encapsulate(gos_bounds[i].bounds);
+            //Debug.Log("bounds: " + bounds);
         }
     }
 
     public void SetBounds(Bounds new_bounds)
     {
-        // Debug.Log("goes");
         bounds = new_bounds;
     }
 

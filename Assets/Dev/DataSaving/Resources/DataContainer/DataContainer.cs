@@ -16,23 +16,25 @@ namespace SOD
 
     public struct MetaData
     {
-        public MetaData(string guid, string type_string, data_changes_enum data_changes)
+        public MetaData(string guid, string type_string, data_changes_enum data_changes, created_type_enum created_type)
         {
             this.guid = guid;
             this.type_string = type_string;
             this.data_changes = data_changes;
+            this.created_type = created_type;
         }
 
         public string guid;
         public string type_string;
         public data_changes_enum data_changes;
+        public created_type_enum created_type;
     }
 
     public struct ArchiveData
     {
         // path variable is here, to keep record the variable name / path, unity_guid does not tell you a lot :)
         // it's not used anywhere in code
-        
+
         public ArchiveData(string path, string unity_guid)
         {
             this.path = path;
@@ -78,7 +80,7 @@ public class DataContainer : SerializedScriptableObject
     {
         get
         {
-            if(!ES3.FileExists(main_data_path_value))
+            if (!ES3.FileExists(main_data_path_value))
             {
                 ES3.Save<string>("testkey", "just to create a file", main_data_path_value);
             }
@@ -162,19 +164,19 @@ public class DataContainer : SerializedScriptableObject
             string guid = entry.Key;
             ArchiveData archive_data = entry.Value;
             string unity_guid = archive_data.unity_guid;
-            
+
             string path = AssetDatabase.GUIDToAssetPath(unity_guid);
             ScriptableObject scriptable = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
 
             inspector_root_data.Add(guid, scriptable);
         }
     }
-    
+
     [ButtonGroup("Button Group 1")]
     [Button]
     private void Validate()
     {
-        if(inspector_root_data == null)
+        if (inspector_root_data == null)
         {
             Debug.LogError("root_data is null!");
             return;
@@ -243,6 +245,107 @@ public class DataContainer : SerializedScriptableObject
         }
     }
 
+    [Button, InfoBox("Assigns new_data_changes to all SODs' editor_data_changes properties under the scriptables_path folder")]
+    private void SetEditorDataChanges(data_changes_enum new_data_changes)
+    {
+        List<ScriptableObject> scrtipables = GetAllScriptables(scriptables_path);
+
+        for (int i = 0; i < scrtipables.Count; i++)
+        {
+            ScriptableObject scriptable = scrtipables[i];
+
+            if (scriptable is IntVariable int_var)
+            {
+                int_var.editor_data_changes = new_data_changes;
+            }
+            else if (scriptable is StringVariable string_var)
+            {
+                string_var.editor_data_changes = new_data_changes;
+            }
+            else if (scriptable is BoolVariable bool_var)
+            {
+                bool_var.editor_data_changes = new_data_changes;
+            }
+            else if (scriptable is FloatVariable float_var)
+            {
+                float_var.editor_data_changes = new_data_changes;
+            }
+            else if (scriptable is SODict sodict)
+            {
+                sodict.editor_data_changes = new_data_changes;
+            }
+            else if (scriptable is SOList solist)
+            {
+                solist.editor_data_changes = new_data_changes;
+            }
+            else
+            {
+                throw new Exception(scriptable.name + " is not supported type!");
+            }
+        }
+    }
+
+    [Button, InfoBox("Gets data_changes properties of all SODs' (under the scriptables_path folder) and assigns them to respective editor_data_changes properties")]
+    private void AlignEditorDataChangesByBuild()
+    {
+        List<ScriptableObject> scrtipables = GetAllScriptables(scriptables_path);
+
+        for (int i = 0; i < scrtipables.Count; i++)
+        {
+            ScriptableObject scriptable = scrtipables[i];
+
+            if (scriptable is IntVariable int_var)
+            {
+                int_var.editor_data_changes = int_var.data_changes;
+            }
+            else if (scriptable is StringVariable string_var)
+            {
+                string_var.editor_data_changes = string_var.data_changes;
+            }
+            else if (scriptable is BoolVariable bool_var)
+            {
+                bool_var.editor_data_changes = bool_var.data_changes;
+            }
+            else if (scriptable is FloatVariable float_var)
+            {
+                float_var.editor_data_changes = float_var.data_changes;
+            }
+            else if (scriptable is SODict sodict)
+            {
+                sodict.editor_data_changes = sodict.data_changes;
+            }
+            else if (scriptable is SOList solist)
+            {
+                solist.editor_data_changes = solist.data_changes;
+            }
+            else
+            {
+                throw new Exception(scriptable.name + " is not supported type!");
+            }
+        }
+    }
+
+    [Button, InfoBox("Makes all SODs in |Persistent| folder to have data_changes set to |persistent| and all SODs in |NonPersistent| folder to have data_changes set to |nonpersistent|")]
+    private void SetDataChangesByFolders()
+    {
+        List<ScriptableObject> persistent_scrtipables = GetAllScriptables(scriptables_path + "/Persistent");
+
+        for (int i = 0; i < persistent_scrtipables.Count; i++)
+        {
+            ScriptableObject persistent_scrtipable = persistent_scrtipables[i];
+
+            SetDataChanges(persistent_scrtipable, data_changes_enum.persistent);
+        }
+
+        List<ScriptableObject> nonpersistent_scrtipables = GetAllScriptables(scriptables_path + "/NonPersistent");
+
+        for (int i = 0; i < nonpersistent_scrtipables.Count; i++)
+        {
+            ScriptableObject nonpersistent_scrtipable = nonpersistent_scrtipables[i];
+
+            SetDataChanges(nonpersistent_scrtipable, data_changes_enum.nonpersistent);
+        }
+    }
 
     [TitleGroup("Testing With Editor", Alignment = TitleAlignments.Centered, GroupID = "Title 0")]
     [ButtonGroup("Title 0/Button Group 2")]
@@ -302,6 +405,14 @@ public class DataContainer : SerializedScriptableObject
         {
             string_var.v = ES3.Load<string>(guid, main_data_path);
         }
+        else if (data is BoolVariable bool_var)
+        {
+            bool_var.v = ES3.Load<bool>(guid, main_data_path);
+        }
+        else if (data is FloatVariable float_var)
+        {
+            float_var.v = ES3.Load<float>(guid, main_data_path);
+        }
         else if (data is SODict sodict)
         {
             // We will use dictionary methods staright from "sodict.v" instead of "sodict" to avoid calling SaveOnDisk
@@ -313,20 +424,17 @@ public class DataContainer : SerializedScriptableObject
             {
                 MetaData meta_data = entry.Value;
 
-                if (root_data.ContainsKey(meta_data.guid))
+                ScriptableObject scriptable = LoadByMetadata(meta_data);
+                if (scriptable == null) continue;
+
+                string key_name = entry.Key;
+                // So that editor_created stuff will have up-to-date names
+                if (meta_data.created_type == created_type_enum.editor_created && root_data.ContainsKey(meta_data.guid))
                 {
-                    // So that editor_created stuff will have up-to-date names
-                    string root_data_name = root_data[meta_data.guid].name;
-                    // It is editor_created / code_created that was
-                    // already initialized with the "else" clause below
-                    sodict.v.Add(root_data_name, root_data[meta_data.guid] );
+                    key_name = root_data[meta_data.guid].name;
                 }
-                else
-                {
-                    string disk_saved_name = entry.Key;
-                    // It is code_created that was not yet initialized
-                    sodict.v.Add( entry.Key, LoadSOD(meta_data.type_string, meta_data.guid, meta_data.data_changes) );
-                }
+
+                sodict.v.Add(key_name, scriptable);
             }
         }
         else if (data is SOList solist)
@@ -334,25 +442,53 @@ public class DataContainer : SerializedScriptableObject
             // We will use list methods staright from "solist.v" instead of "solist" to avoid calling SaveOnDisk
             solist.v.Clear();
 
-            List<MetaData> solist_metadata = ES3.Load< List<MetaData> >(guid, main_data_path);
+            List<MetaData> solist_metadata = ES3.Load<List<MetaData>>(guid, main_data_path);
 
             for (int i = 0; i < solist_metadata.Count; i++)
             {
                 MetaData meta_data = solist_metadata[i];
 
-                if (root_data.ContainsKey(meta_data.guid))
-                {
-                    // It is editor_created / code_created that was
-                    // already initialized with the "else" clause below
-                    solist.v.Add(root_data[meta_data.guid]);
-                }
-                else
-                {
-                    // It is code_created that was not yet initialized
-                    solist.v.Add(LoadSOD(meta_data.type_string, meta_data.guid, meta_data.data_changes));
-                }
+                ScriptableObject scriptable = LoadByMetadata(meta_data);
+                if (scriptable == null) continue;
+
+                solist.v.Add(scriptable);
             }
         }
+
+    }
+
+    private static ScriptableObject LoadByMetadata(MetaData meta_data)
+    {
+        // If it is saved as an editor_created SOD
+        if (meta_data.created_type == created_type_enum.editor_created)
+        {
+            if (root_data.ContainsKey(meta_data.guid))
+            {
+                // It is editor_created that exists in this version of application
+                return root_data[meta_data.guid];
+            }
+            else
+            {
+                // It is editor_created that does not exist in this version of application
+                // So we return null and not add it anywhere, and the next SaveOnDisk will "delete" it
+                return null;
+            }
+        }
+        else if (meta_data.created_type == created_type_enum.code_created)
+        {
+            if (root_data.ContainsKey(meta_data.guid))
+            {
+                // code_created that was already added to root_data by the "else" clause above
+                return root_data[meta_data.guid];
+            }
+            else
+            {
+                // code_created that was not yet initialized / added to root_data
+                return LoadSOD(meta_data.type_string, meta_data.guid, meta_data.data_changes);
+            }
+        }
+
+        return null;
     }
 
     // Saves data in the appropriate format by the given guid
@@ -371,6 +507,14 @@ public class DataContainer : SerializedScriptableObject
         {
             ES3.Save<string>(guid, string_var.v, main_data_path);
         }
+        else if (data is BoolVariable bool_var)
+        {
+            ES3.Save<bool>(guid, bool_var.v, main_data_path);
+        }
+        else if (data is FloatVariable float_var)
+        {
+            ES3.Save<float>(guid, float_var.v, main_data_path);
+        }
         else if (data is SODict sodict)
         {
             Dictionary<string, MetaData> sodict_metadata = new Dictionary<string, MetaData>();
@@ -379,21 +523,7 @@ public class DataContainer : SerializedScriptableObject
             {
                 ScriptableObject scriptable = entry.Value;
 
-                string type_string = scriptable.GetType().ToString();
-                string scriptable_guid = GetFirstGUIDByScriptable(root_data, scriptable);
-                data_changes_enum data_changes = GetDataChanges(scriptable);
-
-                if (scriptable_guid == "")
-                {
-                    // It should not happen under any circumstances, because
-                    // editor_created stuff is always in root_data
-                    // code_created stuff goes through CreateSOD
-                    // and so all data inside SODict is added in root_data before this method
-
-                    Debug.LogError(scriptable.name + " scriptable does not exist in root_data!");
-                }
-
-                sodict_metadata.Add( entry.Key, new MetaData(scriptable_guid, type_string, data_changes) );
+                sodict_metadata.Add(entry.Key, GetMetadataFromSOD(scriptable));
             }
 
             ES3.Save<Dictionary<string, MetaData>>(guid, sodict_metadata, main_data_path);
@@ -406,21 +536,7 @@ public class DataContainer : SerializedScriptableObject
             {
                 ScriptableObject scriptable = solist.v[i];
 
-                string type_string = scriptable.GetType().ToString();
-                string scriptable_guid = GetFirstGUIDByScriptable(root_data, scriptable);
-                data_changes_enum data_changes = GetDataChanges(scriptable);
-
-                if (scriptable_guid == "")
-                {
-                    // It should not happen under any circumstances, because
-                    // editor_created stuff is always in root_data
-                    // code_created stuff goes through CreateSOD
-                    // and so all data inside SODict is added in root_data before this method
-
-                    Debug.LogError(scriptable.name + " scriptable does not exist in root_data!");
-                }
-
-                solist_metadata.Add(new MetaData(scriptable_guid, type_string, data_changes));
+                solist_metadata.Add(GetMetadataFromSOD(scriptable));
             }
 
             ES3.Save<List<MetaData>>(guid, solist_metadata, main_data_path);
@@ -428,11 +544,31 @@ public class DataContainer : SerializedScriptableObject
 
     }
 
+    private static MetaData GetMetadataFromSOD(ScriptableObject scriptable)
+    {
+        string type_string = scriptable.GetType().ToString();
+        string scriptable_guid = GetFirstGUIDByScriptable(root_data, scriptable);
+        data_changes_enum data_changes = GetDataChanges(scriptable);
+        created_type_enum created_type = GetCreatedType(scriptable);
+
+        if (scriptable_guid == "")
+        {
+            // It should not happen under any circumstances, because
+            // editor_created stuff is always in root_data / or it goes through CreateCustomSOD
+            // code_created stuff goes through CreateSOD
+            // and so all data inside SODict is added in root_data before this method
+
+            Debug.LogError(scriptable.name + " scriptable does not exist in root_data!");
+        }
+
+        return new MetaData(scriptable_guid, type_string, data_changes, created_type);
+    }
+
     public static string GetFirstGUIDByScriptable(Dictionary<string, ScriptableObject> dict, ScriptableObject scriptable)
     {
         foreach (KeyValuePair<string, ScriptableObject> entry in dict)
         {
-            if(entry.Value == scriptable)
+            if (entry.Value == scriptable)
             {
                 return entry.Key;
             }
@@ -466,6 +602,14 @@ public class DataContainer : SerializedScriptableObject
         {
             return string_var.data_changes;
         }
+        else if (scriptable is BoolVariable bool_var)
+        {
+            return bool_var.data_changes;
+        }
+        else if (scriptable is FloatVariable float_var)
+        {
+            return float_var.data_changes;
+        }
         else if (scriptable is SODict sodict)
         {
             return sodict.data_changes;
@@ -490,6 +634,14 @@ public class DataContainer : SerializedScriptableObject
         {
             string_var.data_changes = new_data_changes;
         }
+        else if (scriptable is BoolVariable bool_var)
+        {
+            bool_var.data_changes = new_data_changes;
+        }
+        else if (scriptable is FloatVariable float_var)
+        {
+            float_var.data_changes = new_data_changes;
+        }
         else if (scriptable is SODict sodict)
         {
             sodict.data_changes = new_data_changes;
@@ -497,6 +649,38 @@ public class DataContainer : SerializedScriptableObject
         else if (scriptable is SOList solist)
         {
             solist.data_changes = new_data_changes;
+        }
+        else
+        {
+            throw new Exception(scriptable.name + " is not supported type!");
+        }
+    }
+
+    public static created_type_enum GetCreatedType(ScriptableObject scriptable)
+    {
+        if (scriptable is IntVariable int_var)
+        {
+            return int_var.created_type;
+        }
+        else if (scriptable is StringVariable string_var)
+        {
+            return string_var.created_type;
+        }
+        else if (scriptable is BoolVariable bool_var)
+        {
+            return bool_var.created_type;
+        }
+        else if (scriptable is FloatVariable float_var)
+        {
+            return float_var.created_type;
+        }
+        else if (scriptable is SODict sodict)
+        {
+            return sodict.created_type;
+        }
+        else if (scriptable is SOList solist)
+        {
+            return solist.created_type;
         }
         else
         {
@@ -513,6 +697,14 @@ public class DataContainer : SerializedScriptableObject
         else if (scriptable is StringVariable string_var)
         {
             string_var.created_type = new_created_type;
+        }
+        else if (scriptable is BoolVariable bool_var)
+        {
+            bool_var.created_type = new_created_type;
+        }
+        else if (scriptable is FloatVariable float_var)
+        {
+            float_var.created_type = new_created_type;
         }
         else if (scriptable is SODict sodict)
         {
@@ -570,13 +762,21 @@ public class DataContainer : SerializedScriptableObject
         {
             string_var.v = (string)value;
         }
+        else if (scriptable is BoolVariable bool_var)
+        {
+            bool_var.v = (bool)value;
+        }
+        else if (scriptable is FloatVariable float_var)
+        {
+            float_var.v = (float)value;
+        }
         else if (scriptable is SODict sodict)
         {
-            CopySODict(sodict.v, (Dictionary<string, ScriptableObject>) value);
+            CopySODict(sodict.v, (Dictionary<string, ScriptableObject>)value);
         }
         else if (scriptable is SOList solist)
         {
-            CopySOList(solist.v, (List<ScriptableObject>) value);
+            CopySOList(solist.v, (List<ScriptableObject>)value);
         }
     }
 

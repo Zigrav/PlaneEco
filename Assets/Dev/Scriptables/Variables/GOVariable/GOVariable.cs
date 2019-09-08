@@ -42,6 +42,11 @@ public class GOVariable : ScriptableObject
 
     public void OnEnable()
     {
+        Refresh();
+    }
+
+    public void Refresh()
+    {
         gameobject = null;
         godrone = null;
     }

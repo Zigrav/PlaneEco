@@ -52,6 +52,9 @@ public class MatchManager : MonoBehaviour
     private GameEvent level_failed = null;
 
     [SerializeField]
+    private BoolVariable curr_level_passed = null;
+
+    [SerializeField]
     private float level_height_step = 0.0f;
 
     public float height_step;
@@ -114,29 +117,46 @@ public class MatchManager : MonoBehaviour
         // Local level variable to predict how much platforms_count will be in the future
         int predicted_level = levels_passed.v;
 
-        // Fill the level with platforms until fog will do its job
-        while(dist_z < content_border_dist.v)
-        {
-            // Get the predicted level_platforms_count
-            SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
-            int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+        ///////////////////////////
 
-            // Create tiles
-            for (int i = 0; i < level_platforms_count; i++)
-            {
-                dist_z += height_step;
-                CreateNextTile();
-            }
-        
-            // Crate spacing between levels
-            dist_z += level_height_step;
+        //// Fill the level with platforms until fog will do its job
+        //while(dist_z < content_border_dist.v)
+        //{
+        //    // Get the predicted level_platforms_count
+        //    SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
+        //    int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
 
-            // Increase predicted level
-            predicted_level++;
-        }
+        //    // Create tiles
+        //    for (int i = 0; i < level_platforms_count; i++)
+        //    {
+        //        dist_z += height_step;
+        //        CreateNextTile();
+        //    }
+
+        //    // Create spacing between levels
+        //    dist_z += level_height_step;
+
+        //    // Increase predicted level
+        //    predicted_level++;
+        //}
+
+        //////////////////////////
 
         // Update the real level progress data
         SODict level_difficulty_elem = GetElemByLevel.Get(levels_passed.v, difficulty_list);
+
+        int level_platforms_count = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+        // Create tiles
+        for (int i = 0; i < level_platforms_count; i++)
+        {
+            dist_z += height_step;
+            CreateNextTile();
+        }
+        ////////////////////////
+
+        // Debug.Log("levels_passed.v: " + levels_passed.v + " level_difficulty_elem pl count: " + (level_difficulty_elem.v["platforms_count"] as IntVariable).v );
+
         currlevel_platforms_count.v = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
 
         currlevel_platforms_passed.v = 0;
@@ -229,22 +249,27 @@ public class MatchManager : MonoBehaviour
         // Platforms of the current level passed
         currlevel_platforms_passed.v++;
 
-        // Platforms passed in general by this player
-        platforms_passed.v++;
-
         // If level was finished
         if (currlevel_platforms_passed.v == currlevel_platforms_count.v)
         {
+            // Platforms passed in general by this player
+            platforms_passed.v += currlevel_platforms_passed.v;
+
             // Levels passed in general by this player
             levels_passed.v++;
 
             level_passed.Raise();
+
+            curr_level_passed.v = true;
         }
     }
 
     // Called on platform_passed event. Used to move curr things to the next platform
     public void Proceed()
     {
+        // If it is the last platform that was cleared, do not proceed further
+        if (curr_level_passed.v) return;
+
         is_right.v = !is_right.v;
 
         heliports.Remove(heliports.Get(0));
@@ -274,3 +299,109 @@ public class MatchManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// New Variant
+/// 
+
+//public void CreateLevel()
+//{
+//    // Local level variable to predict how much platforms_count will be in the future
+//    int predicted_level = levels_passed.v;
+
+//    ///////////////////////////
+
+//    //// Fill the level with platforms until fog will do its job
+//    //while(dist_z < content_border_dist.v)
+//    //{
+//    //    // Get the predicted level_platforms_count
+//    //    SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
+//    //    int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+//    //    // Create tiles
+//    //    for (int i = 0; i < level_platforms_count; i++)
+//    //    {
+//    //        dist_z += height_step;
+//    //        CreateNextTile();
+//    //    }
+
+//    //    // Create spacing between levels
+//    //    dist_z += level_height_step;
+
+//    //    // Increase predicted level
+//    //    predicted_level++;
+//    //}
+
+//    //////////////////////////
+
+//    // Update the real level progress data
+//    SODict level_difficulty_elem = GetElemByLevel.Get(levels_passed.v, difficulty_list);
+
+//    int level_platforms_count = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+//    // Create tiles
+//    for (int i = 0; i < level_platforms_count; i++)
+//    {
+//        dist_z += height_step;
+//        CreateNextTile();
+//    }
+//    ////////////////////////
+
+//    // Debug.Log("levels_passed.v: " + levels_passed.v + " level_difficulty_elem pl count: " + (level_difficulty_elem.v["platforms_count"] as IntVariable).v );
+
+//    currlevel_platforms_count.v = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+//    currlevel_platforms_passed.v = 0;
+//}
+
+
+
+
+//// Old Variant
+
+//public void CreateLevel()
+//{
+//    // Local level variable to predict how much platforms_count will be in the future
+//    int predicted_level = levels_passed.v;
+
+//    // Fill the level with platforms until fog will do its job
+//    while (dist_z < content_border_dist.v)
+//    {
+//        // Get the predicted level_platforms_count
+//        SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
+//        int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+//        // Create tiles
+//        for (int i = 0; i < level_platforms_count; i++)
+//        {
+//            dist_z += height_step;
+//            CreateNextTile();
+//        }
+
+//        // Crate spacing between levels
+//        dist_z += level_height_step;
+
+//        // Increase predicted level
+//        predicted_level++;
+//    }
+
+//    // Update the real level progress data
+//    SODict level_difficulty_elem = GetElemByLevel.Get(levels_passed.v, difficulty_list);
+
+//    // Debug.Log("levels_passed.v: " + levels_passed.v + " level_difficulty_elem pl count: " + (level_difficulty_elem.v["platforms_count"] as IntVariable).v );
+
+//    currlevel_platforms_count.v = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
+
+//    currlevel_platforms_passed.v = 0;
+//}

@@ -20,10 +20,13 @@ public class UploadInfrastructure : MonoBehaviour
 
         List<Collider2D> infrastructure_colliders2D = new List<Collider2D>(GetComponentsInChildren<Collider2D>());
 
+        // Debug.Log("infrastructure_colliders2D.Count: " + infrastructure_colliders2D.Count);
+
         List<GameObject> infrastructure = new List<GameObject>();
         for (int i = 0; i < infrastructure_colliders2D.Count; i++)
         {
             Collider2D collider2D = infrastructure_colliders2D[i];
+            GameObject placeholder = collider2D.gameObject;
 
             int state = Colliders2DState(collider2D, platform_polygon_collider, platform_edge_collider);
 
@@ -33,6 +36,11 @@ public class UploadInfrastructure : MonoBehaviour
                 InfrastructureData infrastructure_data = collider2D.GetComponent<InfrastructureData>();
 
                 GameObject infrastructure_obj = Instantiate(infrastructure_data.prefab, collider2D.transform.position, Quaternion.identity);
+
+                infrastructure_obj.transform.localScale = placeholder.transform.localScale;
+
+                // Debug.Log("infrastructure_obj scale: " + infrastructure_obj.transform.localScale);
+
                 Transform infrastructure_transform = infrastructure_obj.transform;
 
                 infrastructure_transform.transform.RotateAround(infrastructure_transform.position, new Vector3(1.0f, 0.0f, 0.0f), -90.0f);

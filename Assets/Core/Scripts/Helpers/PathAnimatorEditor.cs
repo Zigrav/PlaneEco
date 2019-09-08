@@ -75,6 +75,9 @@ public class PathAnimatorEditor : Editor
         SerializedProperty end_of_path_instruction = so.FindProperty("end_of_path_instruction");
         EditorGUILayout.PropertyField(end_of_path_instruction, true); // True means show children
 
+        SerializedProperty gradual_stop_length = so.FindProperty("gradual_stop_length");
+        EditorGUILayout.PropertyField(gradual_stop_length, true); // True means show children
+
         SerializedProperty OnStart = so.FindProperty("OnStart");
         EditorGUILayout.PropertyField(OnStart, true); // True means show children
 

@@ -18,7 +18,7 @@ public class PrepareMap : MonoBehaviour
         Vector3 pivot = new Vector3(0.0f, 0.0f, 0.0f);
 
         // Get Map's Bounds
-        go_bounds.SetBounds();
+        go_bounds.SetBounds(false);
 
         // Rotate its center around pivot on Z axis
         go_bounds.bounds.center = RotatePointAroundPivot(go_bounds.bounds.center, pivot, new Vector3(-90.0f, 0.0f, 0.0f));
@@ -32,6 +32,9 @@ public class PrepareMap : MonoBehaviour
 
             // Create placeholder and rotate it to XY Plane
             GameObject placeholder = Instantiate(placeholder_prefab, map_go.transform.position, map_go.transform.rotation, gameObject.transform);
+
+            // Copy scale
+            placeholder.transform.localScale = map_go.transform.localScale;
 
             // Rotate placeholder by 90 along Z axis
             placeholder.transform.RotateAround(pivot, new Vector3(1.0f, 0.0f, 0.0f), -90.0f);

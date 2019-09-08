@@ -11,6 +11,9 @@ public class EventAnimator : MonoBehaviour
 
     public bool is_local = false;
 
+    [SerializeField]
+    private bool rotation = true;
+
     public Vector3 pos_offset;
 
     FloatVariable curr_bool_var;
@@ -63,13 +66,16 @@ public class EventAnimator : MonoBehaviour
             transform.position += pos_offset;
         }
 
-        if (second_object == null)
+        if (rotation)
         {
-            transform.rotation = first_object.go.transform.rotation;
-        }
-        else
-        {
-            transform.rotation = Quaternion.LookRotation(Vector3.Normalize(second_object.go.transform.position - first_object.go.transform.position));
+            if (second_object == null)
+            {
+                transform.rotation = first_object.go.transform.rotation;
+            }
+            else
+            {
+                transform.rotation = Quaternion.LookRotation(Vector3.Normalize(second_object.go.transform.position - first_object.go.transform.position));
+            }
         }
     }
 

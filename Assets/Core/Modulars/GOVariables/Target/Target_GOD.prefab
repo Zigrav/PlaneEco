@@ -1,0 +1,201 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1970634999710455682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4081808205676192811}
+  - component: {fileID: 6155584579316355609}
+  - component: {fileID: 9177500295226298821}
+  - component: {fileID: 4043456495874715008}
+  - component: {fileID: 878055887108791784}
+  m_Layer: 0
+  m_Name: Target_GOD
+  m_TagString: GODrone
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4081808205676192811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970634999710455682}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6155584579316355609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970634999710455682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0ee3c2cdc4b484082be0f668cb3524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  first_object: {fileID: 0}
+  second_object: {fileID: 0}
+  is_local: 0
+  pos_offset: {x: 0, y: 0, z: 0}
+--- !u!114 &9177500295226298821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970634999710455682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: fd81039bd468aa34ab94fdba1d1ea96c, type: 2}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6155584579316355609}
+        m_MethodName: SetParam
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: fade
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6155584579316355609}
+        m_MethodName: SetInteger
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+  delay_frames: 0
+--- !u!114 &4043456495874715008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970634999710455682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea026e91d83e43b43064eaa2da637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 2eb810b46548ad34a936f87bd1f3a5a8, type: 2}
+  Order: 0
+  UseConditions: 0
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6155584579316355609}
+        m_MethodName: SetParam
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: fade
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6155584579316355609}
+        m_MethodName: SetInteger
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 878055887108791784}
+        m_MethodName: SetAnimator
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  variable_variant: 0
+  string_variant: 0
+  boolean_variant: 0
+  int_variant: 0
+  float_variant: 0
+  conditions_0_variant: 0
+  conditions_1_variant: 0
+  first_string_var: {fileID: 0}
+  first_bool_var: {fileID: 0}
+  first_int_var: {fileID: 0}
+  first_float_var: {fileID: 0}
+  second_string_var: {fileID: 0}
+  second_bool_var: {fileID: 0}
+  second_int_var: {fileID: 0}
+  second_float_var: {fileID: 0}
+  second_string: 
+  second_bool: 0
+  second_int: 0
+  second_float: 0
+  delay_frames: 0
+--- !u!114 &878055887108791784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970634999710455682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbd107a727c0f1458b943ad2da1b754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  event_animator: {fileID: 6155584579316355609}

@@ -13,8 +13,11 @@ public class GetElemByLevel
             int from_lvl = (level_difficulty_elem.v["from_lvl"] as IntVariable).v;
             int to_lvl = (level_difficulty_elem.v["to_lvl"] as IntVariable).v;
 
+            // Debug.Log("from_lvl: " + from_lvl + " to_lvl: " + to_lvl);
+
             if (from_lvl <= level && level <= to_lvl)
             {
+                // Debug.Log("return");
                 return level_difficulty_elem;
             }
 

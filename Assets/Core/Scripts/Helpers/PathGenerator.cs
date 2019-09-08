@@ -24,6 +24,12 @@ public class PathGenerator : MonoBehaviour
     private List<Anchor> anchors;
     private bool initiated = false;
 
+    [SerializeField]
+    private float max_angle_error = 0.3f;
+
+    [SerializeField]
+    private float min_vertex_dist = 0.05f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +43,6 @@ public class PathGenerator : MonoBehaviour
 
     public void StartPathGenerator()
     {
-        // Debug.Log("StartPathGenerator: " + gameObject.name);
         AddAnchorsToPath();
         UpdateAnchors();
     }
@@ -45,6 +50,16 @@ public class PathGenerator : MonoBehaviour
     public void UpdateAnchors()
     {
         bool corrupted_data = false;
+
+
+        //if(this.name == "CameraFlyPath")
+        //{
+        //    Debug.Log("CameraFlyPath Updating Anchors");
+        //}
+        //else if (this.name == "FocusPointPath")
+        //{
+        //    Debug.Log("FocusPointPath Updating Anchors");
+        //}
 
         // Debug.Log("anchor points 3: " + path.bezierPath.NumAnchorPoints);
 
@@ -68,15 +83,13 @@ public class PathGenerator : MonoBehaviour
 
         // Vertex Path is updated only when path.path.vertices is called through ContextMenu in Editor
         // So we create new VertexPath Each time to be keep it up to date :/
-        vertex_path = new VertexPath(path.bezierPath);
+        vertex_path = new VertexPath(path.bezierPath, max_angle_error, min_vertex_dist);
 
         if(vertex_path.vertices.Length == 1)
         {
             Debug.LogError("The path on " + gameObject.name + " has only 1 vertex!");
             corrupted_data = true;
         }
-
-        // Debug.Log("vertex_path length: " + vertex_path.vertices.Length);
 
         corrupted_path = corrupted_data;
 

@@ -52,8 +52,22 @@ public class PathAnimator : MonoBehaviour
 
     private bool is_set_on_start = false;
 
+    // Original saved_coeff that was put into Inspector
+    private float original_speed_coeff = 1.0f;
+
+    // Is animation being slowed down slowely
+    private bool is_gradually_stopping_anim = false;
+    // Fraction by which we will be slowing the anim
+    private float gradual_stop_fraction = 0;
+
+    // How long should it take for animation to stop gradually (in frames)
+    [SerializeField]
+    private int gradual_stop_length = 0;
+
     private void Start()
     {
+        original_speed_coeff = speed_coeff;
+
         OnStart.Invoke();
     }
 
@@ -116,6 +130,19 @@ public class PathAnimator : MonoBehaviour
         else
         {
             OnFixedUpdate.Invoke();
+        }
+
+        // If we are slowing down this animation
+        if (is_gradually_stopping_anim)
+        {
+            speed_coeff -= gradual_stop_fraction;
+            if (speed_coeff <= 0.0f)
+            {
+                StopAnimation();
+                speed_coeff = original_speed_coeff;
+                is_gradually_stopping_anim = false;
+            }
+
         }
 
         FrameMove(end_of_path_instruction);
@@ -183,6 +210,17 @@ public class PathAnimator : MonoBehaviour
     public void StopAnimation()
     {
         is_anim_running = false;
+    }
+
+    public void GraduallyStopAnimation()
+    {
+        if (gradual_stop_length <= 0)
+        {
+            throw new System.Exception("gradual_stop_length equals " + gradual_stop_length + ", while trying to stop gradually! " + this.name);
+        }
+
+        gradual_stop_fraction = speed_coeff / gradual_stop_length;
+        is_gradually_stopping_anim = true;
     }
 
     public float CalcSpeed(float fraction, float l_speed_coeff)

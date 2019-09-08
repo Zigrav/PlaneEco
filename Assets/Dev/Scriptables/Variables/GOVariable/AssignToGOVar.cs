@@ -6,7 +6,7 @@ public class AssignToGOVar : MonoBehaviour
 {
     public GOVariable go_var;
 
-    private void Awake()
+    public void Assign()
     {
         if(go_var != null)
         {

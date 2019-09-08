@@ -11,21 +11,18 @@ public class GenerateArcPath : MonoBehaviour
     public Object second_point;
 
     public int aim_path_points_num;
-    public float prolong_angle;
+    public float prolong_dist;
 
     public ValueFromAngle deviation_from_angle;
 
     private Transform first_point_transform;
     private Transform second_point_transform;
 
+    [SerializeField]
+    private bool swap_arc = false;
+
     [HideInInspector]
     public bool corrupted_data = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        CollectData();
-    }
 
     private bool CollectData()
     {
@@ -50,6 +47,12 @@ public class GenerateArcPath : MonoBehaviour
             return;
         }
 
+        if (aim_path_points_num <= 1)
+        {
+            Debug.LogError("aim_path_points_num: " + aim_path_points_num);
+            return;
+        }
+
         // Calculate the deviation value
         float deviation = deviation_from_angle.GetValueFromAngle();
         if (deviation_from_angle.corrupted_data)
@@ -57,6 +60,7 @@ public class GenerateArcPath : MonoBehaviour
             Debug.Log("CreateArcPath Deviation: " + deviation_from_angle.corrupted_data);
             return;
         }
+        deviation = swap_arc ? deviation * -1 : deviation; // Swap the arc if chosen
 
         // Get point positions
         Vector3 first_point_pos = first_point_transform.position;
@@ -64,22 +68,27 @@ public class GenerateArcPath : MonoBehaviour
 
         //Calculate Middle Point
         Vector3 middle_point = new Vector3(0.0f, 0.0f, 0.0f);
-        Vector3 aim_start_to_target = second_point_pos - first_point_pos;
+        Vector3 first_point_to_second_point = second_point_pos - first_point_pos;
 
-        middle_point.x = first_point_pos.x + (aim_start_to_target.x / 2);
-        middle_point.y = first_point_pos.y + (aim_start_to_target.y / 2);
-        middle_point.z = first_point_pos.z + (aim_start_to_target.z / 2);
+        middle_point.x = first_point_pos.x + (first_point_to_second_point.x / 2);
+        middle_point.y = first_point_pos.y + (first_point_to_second_point.y / 2);
+        middle_point.z = first_point_pos.z + (first_point_to_second_point.z / 2);
 
         // Calculate Circle Center
-        Vector3 deviation_norm = Vector3.Normalize(Vector3.Cross(Vector3.up, aim_start_to_target));
+        Vector3 deviation_norm = Vector3.Normalize(Vector3.Cross(Vector3.up, first_point_to_second_point));
         Vector3 circle_center = middle_point + (deviation_norm * deviation);
+        float circle_radius = Vector3.Distance(circle_center, first_point_pos);
 
-        // Debug.DrawLine(middle_point, circle_center);
+        Debug.DrawLine(circle_center, middle_point);
 
         // Calculate Angle between fisrt_point and second_point and Angle Step
         float sign = deviation > 0 ? 1.0f : -1.0f;
+
+        // First we get the angle in radians, and then we tranform them into degrees
+        float prolong_angle = prolong_dist / circle_radius * (180 / Mathf.PI);
+
         float angle = Vector3.Angle(first_point_pos - circle_center, second_point_pos - circle_center) + prolong_angle;
-        float angle_step = angle / aim_path_points_num * sign;
+        float angle_step = angle / (aim_path_points_num - 1) * sign;
 
         // Prepare Path Points for Creating
         Vector3 curr_aim_path_point = first_point_pos - circle_center;
@@ -87,7 +96,6 @@ public class GenerateArcPath : MonoBehaviour
 
         for (int i = 0; i < path_points.Length; i++)
         {
-            //Debug.Log(i + " p: " + (curr_aim_path_point + circle_center));
             // Pushing new point to an array
             path_points[i] = curr_aim_path_point + circle_center;
 
@@ -100,7 +108,7 @@ public class GenerateArcPath : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (vertex_path == null) return; 
+        if (vertex_path == null) return;
 
         for (int i = 0; i < vertex_path.NumVertices - 1; i++)
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 using PathCreation;
 
 [ExecuteInEditMode]
-
+// BANNED BANNED BANNED
 public class CorrectPathPos : MonoBehaviour
 {
     public PathCreator path_creator;
@@ -13,6 +13,7 @@ public class CorrectPathPos : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBs");
         path_creator = GetComponent<PathCreator>();
     }
 

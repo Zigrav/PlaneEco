@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e426826058301648a6d00bd67e1f643, type: 3}
+  m_Name: GODataContainer
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  inspector_go_vars_root_data:
+  - {fileID: 11400000, guid: ac5e762cf392d67479d0d9d7e25dbb9c, type: 2}
+  - {fileID: 11400000, guid: b5ff7a3e7cfae4347accf8a90dc08005, type: 2}
+  - {fileID: 11400000, guid: 481c60fc7445a164381c796cac8d2ed3, type: 2}
+  - {fileID: 11400000, guid: fc639e3ba43029e4da0a19a24003bb7e, type: 2}
+  - {fileID: 11400000, guid: db3c854c5af8c0a458d5ae6cbfb24d4c, type: 2}
+  - {fileID: 11400000, guid: 556bb80eb8527e7408461443340ea79a, type: 2}
+  - {fileID: 11400000, guid: aba82f64a456b1f4cb232201be4515ed, type: 2}
+  - {fileID: 11400000, guid: a99906e1a4e47b34ca6af7e20508c345, type: 2}
+  - {fileID: 11400000, guid: 1b72aa6c9aae7964c8c0d4d7d08b76c5, type: 2}
+  - {fileID: 11400000, guid: d37dd23b22ebe734b933bc48ca125c1b, type: 2}
+  - {fileID: 11400000, guid: fae925dfa79c05e43b58557c0c641f42, type: 2}
+  - {fileID: 11400000, guid: 5a5477f7660de1a458b6caea53d81873, type: 2}
+  - {fileID: 11400000, guid: 25b8090784e05a043bf4e59e7a99872a, type: 2}
+  - {fileID: 11400000, guid: 6dca0253ff976f8449e114779fbafdc5, type: 2}
+  - {fileID: 11400000, guid: 78dc57d2ecd473d4a81e7b38506ea78c, type: 2}
+  - {fileID: 11400000, guid: 0371de2af7651344b851be19949a1f96, type: 2}
+  - {fileID: 11400000, guid: 72a8053b6d6babf4292b60249d98ece0, type: 2}
+  - {fileID: 11400000, guid: b15c33763f3bafe48acc2c3ab735c358, type: 2}
+  - {fileID: 11400000, guid: 50b91d28591b99245b9f8c6efbdb6225, type: 2}
+  - {fileID: 11400000, guid: 184950f834b45f746bdc8128d8eac992, type: 2}
+  - {fileID: 11400000, guid: 56bfaca7b7cfd1045840df440f3235ed, type: 2}
+  - {fileID: 11400000, guid: 2e207b04ef47ab540852f776867763d0, type: 2}
+  - {fileID: 11400000, guid: 7f75566b0a2703844b5ffe537b50a40b, type: 2}
+  - {fileID: 11400000, guid: 632c152a08c92674e89f131c9a5a4f67, type: 2}
+  - {fileID: 11400000, guid: 0e3b471ee1b9ca54bbedc507085abc15, type: 2}
+  scriptables_path: Assets/Core/Modulars

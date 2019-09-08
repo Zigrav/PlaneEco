@@ -131,7 +131,7 @@ public class GameEventListener : MonoBehaviour
         // If This Listener Should Delay Invoke And It Is Not Preparing
         if (delay_frames != 0 && !is_preparing)
         {
-            Debug.Log("delayed on " + delay_frames + " frames");
+            // Debug.Log("delayed on " + delay_frames + " frames");
             delay_frames_left = delay_frames;
             is_preparing = true;
             return;

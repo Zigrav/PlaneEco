@@ -22,12 +22,6 @@ public class ValueFromAngle : MonoBehaviour
     [HideInInspector]
     public bool corrupted_data = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        CollectData();
-    }
-
     private bool CollectData()
     {
         corrupted_data = false;

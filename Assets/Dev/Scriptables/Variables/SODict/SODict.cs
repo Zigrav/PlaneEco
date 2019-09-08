@@ -11,6 +11,8 @@ public class SODict : SerializedScriptableObject
     [Header("Build & Editor")]
     [SerializeField]
     private Dictionary<string, ScriptableObject> core_value = new Dictionary<string, ScriptableObject>();
+    [SerializeField]
+    private Dictionary<string, ScriptableObject> refresh_value = new Dictionary<string, ScriptableObject>();
     public data_changes_enum data_changes = data_changes_enum.persistent;
     [HideInInspector]
     public created_type_enum created_type = created_type_enum.editor_created;
@@ -19,10 +21,7 @@ public class SODict : SerializedScriptableObject
     [Header("Editor-Only")]
     [Multiline]
     public string description = "";
-    [SerializeField]
-    private data_changes_enum editor_data_changes = data_changes_enum.nonpersistent;
-    [SerializeField]
-    private Dictionary<string, ScriptableObject> refresh_value = new Dictionary<string, ScriptableObject>();
+    public data_changes_enum editor_data_changes = data_changes_enum.nonpersistent;
 #endif
 
     public void OnEnable()
@@ -38,6 +37,15 @@ public class SODict : SerializedScriptableObject
 #if UNITY_EDITOR
         if (editor_data_changes == data_changes_enum.nonpersistent) DataContainer.CopySODict(refresh_value, core_value);
 #endif
+    }
+
+    public void ChangeValue(string key, ScriptableObject scriptable)
+    {
+        if (!core_value.ContainsKey(key)) throw new System.Exception(name + " SODict does not have key: |" + key + "| defined");
+
+        core_value[key] = scriptable;
+
+        if (data_changes == data_changes_enum.persistent) DataContainer.SaveOnDisk(this);
     }
 
     public void Add(string key, ScriptableObject scriptable)
@@ -68,6 +76,11 @@ public class SODict : SerializedScriptableObject
         {
             return core_value;
         }
+    }
+
+    public void Refresh()
+    {
+        if (data_changes == data_changes_enum.nonpersistent) DataContainer.CopySODict(refresh_value, core_value);
     }
 
 }

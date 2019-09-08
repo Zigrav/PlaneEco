@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class PressReleaseEventSpawner : MonoBehaviour
 {
     [SerializeField]
-    private BoolVariable is_pointer_hold;
+    private BoolVariable is_pointer_hold = null;
 
     public UnityEvent InputPress;
     public UnityEvent InputRelease;
@@ -71,19 +71,9 @@ public class PressReleaseEventSpawner : MonoBehaviour
 
         EventSystem.current.RaycastAll(pointer_event_data, raycast_results);
 
-        for (int i = 0; i < raycast_results.Count; i++)
-        {
-            RaycastResult raycast_result = raycast_results[i];
-
-            if (raycast_result.gameObject.GetComponent<MouseUIClickthroughable>() != null)
-            {
-                raycast_results.RemoveAt(i);
-                i--;
-            }
-        }
-
         if (raycast_results.Count > 0)
         {
+            // Debug.Log("It is actually over UI: " + raycast_results.Count);
             is_mouse_over_ui = true;
         }
 

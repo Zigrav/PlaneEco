@@ -17,7 +17,11 @@ public class GenerateInfrastructure : MonoBehaviour
             PreparePlatform();
             frame_num++;
         }
-        else if(frame_num == 1)
+        else if(frame_num <= 3)
+        {
+            frame_num++;
+        }
+        else if(frame_num == 4)
         {
             Generate();
             frame_num++;
@@ -48,8 +52,11 @@ public class GenerateInfrastructure : MonoBehaviour
         // Make Infrastructure Children Of The Platform Collider
         for (int i = 0; i < infrastructure.Count; i++)
         {
+            // Debug.Log("infrastructure: " + infrastructure[i].name);
             GameObject infr_object = infrastructure[i];
             infr_object.transform.parent = platform_collider.transform;
+
+            // Debug.Log("0 infrastructure scale : " + infrastructure[i].transform.localScale + " lossy: " + infrastructure[i].transform.lossyScale);
         }
 
         // Snapshot Platform Collider Transform
@@ -64,9 +71,14 @@ public class GenerateInfrastructure : MonoBehaviour
         // Deparent Infrastructure And Rotate It To Make It Really Align With The Platform
         for (int i = 0; i < infrastructure.Count; i++)
         {
+            // Debug.Log("1 infrastructure scale : " + infrastructure[i].transform.localScale + " lossy: " + infrastructure[i].transform.lossyScale);
+
             GameObject infr_object = infrastructure[i];
             infr_object.transform.parent = null;
             infr_object.transform.RotateAround(platform_collider.transform.position, platform_collider.transform.right, 90.0f);
+
+            // Debug.Log("2 infrastructure scale : " + infrastructure[i].transform.localScale + " lossy: " + infrastructure[i].transform.lossyScale);
+
         }
 
         // Return Platform Collider To Its Saved Transform
@@ -76,6 +88,7 @@ public class GenerateInfrastructure : MonoBehaviour
         // Assign Infrastructure To Platform Field
         transform.parent.GetComponent<PreparePlatform>().infrastructure = infrastructure;
         transform.parent.GetComponent<PreparePlatform>().GenerateOffsets();
+
     }
 
     private void PreparePlatform()

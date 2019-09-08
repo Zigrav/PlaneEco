@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class FireOnStart : MonoBehaviour
 {
-    public UnityEvent OnStart;
+    public UnityEvent OnAwake;
 
     private void Start()
     {
-        OnStart.Invoke();
+        OnAwake.Invoke();
     }
 }

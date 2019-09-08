@@ -7,6 +7,8 @@ public class StringVariable : ScriptableObject
     [Header("Build & Editor")]
     [SerializeField]
     private string core_value;
+    [SerializeField]
+    private string refresh_value = "";
     public data_changes_enum data_changes = data_changes_enum.persistent;
     [HideInInspector]
     public created_type_enum created_type = created_type_enum.editor_created;
@@ -15,10 +17,7 @@ public class StringVariable : ScriptableObject
     [Header("Editor-Only")]
     [Multiline]
     public string description = "";
-    [SerializeField]
-    private data_changes_enum editor_data_changes = data_changes_enum.nonpersistent;
-    [SerializeField]
-    private string refresh_value = "";
+    public data_changes_enum editor_data_changes = data_changes_enum.nonpersistent;
 #endif
 
     public void OnEnable()
@@ -49,5 +48,10 @@ public class StringVariable : ScriptableObject
 
             if (data_changes == data_changes_enum.persistent) DataContainer.SaveOnDisk(this);
         }
+    }
+
+    public void Refresh()
+    {
+        if (data_changes == data_changes_enum.nonpersistent) core_value = refresh_value;
     }
 }

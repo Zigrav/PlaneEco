@@ -11,6 +11,11 @@ public class GOList : ScriptableObject
 
     public void OnEnable()
     {
+        Refresh();
+    }
+
+    public void Refresh()
+    {
         list = new List<GameObject>();
         godrones = new List<GameObject>();
         godrone_prefab = null;
