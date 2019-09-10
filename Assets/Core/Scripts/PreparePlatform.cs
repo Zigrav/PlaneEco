@@ -30,7 +30,7 @@ public class PreparePlatform : MonoBehaviour
 
     private List<GameObject> PX;
 
-    private List<GameObject> hexes;
+    private GameObject platform_model = null;
     
     public float infrastructure_offsets_min;
     public float infrastructure_offsets_max;
@@ -50,12 +50,9 @@ public class PreparePlatform : MonoBehaviour
     float starting_vfx_time = 0.0f;
 
     public GameObject target;
-    public UnityEvent OnUpdate;
-    public FloatVariable var_test;
 
     private void Start()
     {
-        // test.v = var_test;
         animator = GetComponent<Animator>();
 
         from_mat_0 = new Material(from_mat_0);
@@ -63,10 +60,9 @@ public class PreparePlatform : MonoBehaviour
         from_mat_2 = new Material(from_mat_2);
 
         PX = new List<GameObject>();
-        hexes = new List<GameObject>();
         
         CollectPlatformObjects();
-        PrepareHexes();
+        SetSharedMaterials();
 
         GenerateOffsets();
 
@@ -77,8 +73,6 @@ public class PreparePlatform : MonoBehaviour
     void Update()
     {
         float passed_time = Time.time - vfx_start_time;
-
-        OnUpdate.Invoke();
 
         if (is_vfx_starting)
         {
@@ -203,17 +197,10 @@ public class PreparePlatform : MonoBehaviour
 
             if (!platform_object.activeSelf) continue;
             
-            if (platform_object.name.Contains("hexagon") || platform_object.name.Contains("hex_triangle"))
+            if (platform_object.name.Contains("platform_model"))
             {
-                Material hex_MAT = platform_object.GetComponent<Renderer>().sharedMaterial;
-
-                if (!hex_MAT.name.Contains("foliage"))
-                {
-                    hexes.Add(platform_object);
-                    // Debug.Log(platform_object);
-
-                    platform_object.tag = "OnPlatformPass";
-                }
+                platform_model = platform_object;
+                // Debug.Log("platform_model name: " + platform_model.name);
             }
 
             if (platform_object.name.Contains("PS") && platform_object.tag == "OnPlatformPass")
@@ -224,37 +211,13 @@ public class PreparePlatform : MonoBehaviour
         }
     }
 
-    private void PrepareHexes()
+    private void SetSharedMaterials()
     {
-        Transform[] children_transforms = GetComponentsInChildren<Transform>();
+        Renderer platform_model_renderer = platform_model.GetComponent<Renderer>();
 
-        for (int i = 0; i < hexes.Count; i++)
-        {
-            GameObject hex = hexes[i];
-            Material hex_shared_mat = hex.GetComponent<Renderer>().sharedMaterial;
-            Renderer hex_renderer = hex.GetComponent<Renderer>();
-
-            // Assign Approprite Copied Bench Material
-            if (hex_shared_mat.name.Contains("0"))
-            {
-                hex_renderer.sharedMaterial = from_mat_0;
-            }
-            else if (hex_shared_mat.name.Contains("1"))
-            {
-                hex_renderer.sharedMaterial = from_mat_1;
-            }
-            else if (hex_shared_mat.name.Contains("2"))
-            {
-                hex_renderer.sharedMaterial = from_mat_2;
-            }
-        }
+        // Assign Approprite Copied Bench Material
+        Material[] new_shared_MATs = { platform_model_renderer.sharedMaterials[0], from_mat_0, from_mat_1, from_mat_2 };
+        platform_model_renderer.sharedMaterials = new_shared_MATs;
     }
 
-
-
-    //Vector3 new_hex_pos = hex.transform.position;
-    //new_hex_pos.y += 0.01f;
-
-    //GameObject new_hex = Instantiate(hex, new_hex_pos, hex.transform.rotation, transform);
-    //new_hex.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
 }

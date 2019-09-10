@@ -19,9 +19,41 @@ public class EventRewarder : MonoBehaviour, IUnityAdsListener
     [SerializeField]
     private UnityEvent ad_started = null;
 
+    private bool on_ad_started_callback = false;
+    private bool on_finished_callback = false;
+    private bool on_skipped_callback = false;
+    private bool on_failed_callback = false;
+
     private void Start()
     {
         Advertisement.AddListener(this);
+    }
+
+    private void Update()
+    {
+        if (on_ad_started_callback)
+        {
+            ad_started.Invoke();
+            on_ad_started_callback = false;
+        }
+
+        if (on_finished_callback)
+        {
+            finished.Invoke();
+            on_finished_callback = false;
+        }
+
+        if (on_skipped_callback)
+        {
+            skipped.Invoke();
+            on_skipped_callback = false;
+        }
+
+        if (on_failed_callback)
+        {
+            failed.Invoke();
+            on_failed_callback = false;
+        }
     }
 
     // Implement IUnityAdsListener interface methods:
@@ -35,20 +67,26 @@ public class EventRewarder : MonoBehaviour, IUnityAdsListener
                 // Reward the user for watching the ad to completion.
                 // Debug.Log("Finished");
 
-                finished.Invoke();
+                on_finished_callback = true;
+
+                //finished.Invoke();
             }
             else if (showResult == ShowResult.Skipped)
             {
                 // Do not reward the user for skipping the ad.
                 // Debug.Log("Skipped");
 
-                skipped.Invoke();
+                on_skipped_callback = true;
+
+                //skipped.Invoke();
             }
             else if (showResult == ShowResult.Failed)
             {
                 // Debug.Log("Failed");
 
-                failed.Invoke();
+                on_failed_callback = true;
+
+                //failed.Invoke();
             }
         }
     }
@@ -67,7 +105,7 @@ public class EventRewarder : MonoBehaviour, IUnityAdsListener
     {
         if (placementId == ad_placement)
         {
-            ad_started.Invoke();
+            on_ad_started_callback = true;
         }
     }
 }

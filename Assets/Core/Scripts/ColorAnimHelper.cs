@@ -41,6 +41,8 @@ public class ColorAnimHelper : MonoBehaviour
 
     public void Prepare()
     {
+        // Debug.Log("Preparing ColorAnimHelper");
+
         PreparePlatform prep_platf = GetComponent<PreparePlatform>();
 
         from_mat_0 = prep_platf.from_mat_0;

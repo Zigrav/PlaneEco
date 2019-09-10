@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="firebase_database_url" translatable="false">https://tjumper-c6f17.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">732097479498</string>
+  <string name="google_storage_bucket" translatable="false">tjumper-c6f17.appspot.com</string>
+  <string name="project_id" translatable="false">tjumper-c6f17</string>
+  <string name="google_api_key" translatable="false">AIzaSyBFjuHNWy_jY1k3qprpcqjd0TyPnUt1TEk</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBFjuHNWy_jY1k3qprpcqjd0TyPnUt1TEk</string>
+  <string name="google_app_id" translatable="false">1:732097479498:android:bde7fd2bc5bf2a0273f7b3</string>
+  <string name="default_web_client_id" translatable="false">732097479498-dfro4hjr489m77sqk713cvbmcj0u4h8b.apps.googleusercontent.com</string>
+</resources>

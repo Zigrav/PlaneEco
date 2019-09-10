@@ -9,9 +9,9 @@ using UnityEngine.Events;
 public class TODELETE : MonoBehaviour
 {
     [SerializeField]
-    private PathCreator path;
+    private PathCreator path = null;
     [SerializeField]
-    private VertexPath vertex_path;
+    private VertexPath vertex_path = null;
 
     public void CreateNewVertexPath()
     {

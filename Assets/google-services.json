@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "732097479498",
+    "firebase_url": "https://tjumper-c6f17.firebaseio.com",
+    "project_id": "tjumper-c6f17",
+    "storage_bucket": "tjumper-c6f17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732097479498:android:bde7fd2bc5bf2a0273f7b3",
+        "android_client_info": {
+          "package_name": "com.Zigrav.PlaneEco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732097479498-dfro4hjr489m77sqk713cvbmcj0u4h8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFjuHNWy_jY1k3qprpcqjd0TyPnUt1TEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "732097479498-dfro4hjr489m77sqk713cvbmcj0u4h8b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "732097479498-ql4fcklugr7falo2un4cvql99k8b70c6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zigrav.TJumper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

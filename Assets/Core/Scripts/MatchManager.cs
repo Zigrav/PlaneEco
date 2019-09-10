@@ -43,8 +43,6 @@ public class MatchManager : MonoBehaviour
     private IntVariable currlevel_platforms_count = null;
     [SerializeField]
     private IntVariable currlevel_platforms_passed = null;
-    [SerializeField]
-    private FloatVariable content_border_dist = null;
 
     [SerializeField]
     private GameEvent level_passed = null;
@@ -55,7 +53,7 @@ public class MatchManager : MonoBehaviour
     private BoolVariable curr_level_passed = null;
 
     [SerializeField]
-    private float level_height_step = 0.0f;
+    private int extra_platforms = 2;
 
     public float height_step;
     public float width_step;
@@ -111,36 +109,11 @@ public class MatchManager : MonoBehaviour
         curr_platform.go = platforms.Get(0);
         curr_target.go = targets.Get(0);
     }
-
+    
     public void CreateLevel()
     {
         // Local level variable to predict how much platforms_count will be in the future
         int predicted_level = levels_passed.v;
-
-        ///////////////////////////
-
-        //// Fill the level with platforms until fog will do its job
-        //while(dist_z < content_border_dist.v)
-        //{
-        //    // Get the predicted level_platforms_count
-        //    SODict predicted_level_difficulty_elem = GetElemByLevel.Get(predicted_level, difficulty_list);
-        //    int level_platforms_count = (predicted_level_difficulty_elem.v["platforms_count"] as IntVariable).v;
-
-        //    // Create tiles
-        //    for (int i = 0; i < level_platforms_count; i++)
-        //    {
-        //        dist_z += height_step;
-        //        CreateNextTile();
-        //    }
-
-        //    // Create spacing between levels
-        //    dist_z += level_height_step;
-
-        //    // Increase predicted level
-        //    predicted_level++;
-        //}
-
-        //////////////////////////
 
         // Update the real level progress data
         SODict level_difficulty_elem = GetElemByLevel.Get(levels_passed.v, difficulty_list);
@@ -148,14 +121,11 @@ public class MatchManager : MonoBehaviour
         int level_platforms_count = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
 
         // Create tiles
-        for (int i = 0; i < level_platforms_count; i++)
+        for (int i = 0; i < level_platforms_count + extra_platforms; i++)
         {
             dist_z += height_step;
             CreateNextTile();
         }
-        ////////////////////////
-
-        // Debug.Log("levels_passed.v: " + levels_passed.v + " level_difficulty_elem pl count: " + (level_difficulty_elem.v["platforms_count"] as IntVariable).v );
 
         currlevel_platforms_count.v = (level_difficulty_elem.v["platforms_count"] as IntVariable).v;
 
